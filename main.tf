@@ -1,10 +1,9 @@
 locals {
-  kong_container_image = "kong:3.7.1-ubuntu"
-  name                 = "kong-postgres"
-  db_identifier        = "${local.name}-01"
-  rds_engine           = "postgres"
-  storage_encrypted    = true
-  storage_type         = "gp3"
+  name              = "kong-postgres"
+  db_identifier     = "${local.name}-01"
+  rds_engine        = "postgres"
+  storage_encrypted = true
+  storage_type      = "gp3"
 
   postgres = {
     engine_version       = 16.3
@@ -22,8 +21,7 @@ data "aws_vpc" "vpc" {
   id = var.vpc_id
 }
 
-
-module "postgres-security-group" {
+module "postgres_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.1.2"
 
@@ -36,15 +34,19 @@ module "postgres-security-group" {
       from_port   = 0
       to_port     = 5432
       protocol    = "tcp"
-      description = "PostgreSQL access from within VPC"
       cidr_blocks = data.aws_vpc.vpc.cidr_block
     },
   ]
-
+  egress_with_cidr_blocks = [{
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = "0.0.0.0/0"
+  }, ]
   tags = merge(local.default_tags, var.postgres_sg_tags)
 }
 
-module "kong-rds" {
+module "kong_rds" {
   source  = "terraform-aws-modules/rds/aws"
   version = "~> 6.7.0"
 
@@ -72,7 +74,7 @@ module "kong-rds" {
   deletion_protection     = var.deletion_protection
   maintenance_window      = var.maintenance_window
 
-  vpc_security_group_ids                = [module.postgres-security-group.security_group_id]
+  vpc_security_group_ids                = [module.postgres_security_group.security_group_id]
   create_db_subnet_group                = var.create_db_subnet_group
   subnet_ids                            = var.private_subnet_ids
   performance_insights_enabled          = var.performance_insights_enabled
@@ -80,4 +82,3 @@ module "kong-rds" {
 
   tags = merge(local.default_tags, var.rds_db_tags)
 }
-

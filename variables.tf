@@ -1,8 +1,3 @@
-variable "cluster_name" {
-  description = "Name of the cluster"
-  type        = string
-}
-
 variable "private_subnet_ids" {
   description = "List of private subnet id"
   type        = list(string)
@@ -41,12 +36,6 @@ variable "backup_retention_period" {
   description = "The number of days to retain backups"
   type        = number
   default     = 1
-}
-
-variable "skip_final_snapshot" {
-  description = "Whether to skip the final snapshot"
-  type        = bool
-  default     = true
 }
 
 variable "deletion_protection" {
@@ -91,16 +80,6 @@ variable "db_password" {
   default     = "defaultpassword"
 }
 
-variable "private_subnet_ids" {
-  description = "List of private subnet id"
-  type        = list(string)
-}
-
-variable "vpc_id" {
-  description = "The ID of the VPC"
-  type        = string
-}
-
 variable "rds_db_tags" {
   description = "List of tags"
   type        = map(string)
@@ -134,10 +113,4 @@ variable "maintenance_window" {
 variable "region" {
   description = "AWS region"
   type        = string
-}
-
-variable "postgres_db_name" {
-  description = "Postgres database name"
-  type        = string
-  default     = "kong"
 }
