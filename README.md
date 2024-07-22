@@ -61,7 +61,7 @@
 | <a name="input_instance_type_for_kong"></a> [instance\_type\_for\_kong](#input\_instance\_type\_for\_kong) | Instance type for kong | `string` | `"t2.micro"` | no |
 | <a name="input_key_name_for_kong"></a> [key\_name\_for\_kong](#input\_key\_name\_for\_kong) | Key name for to SSH into kong instance | `string` | `null` | no |
 | <a name="input_kong_public_sub_domain_names"></a> [kong\_public\_sub\_domain\_names](#input\_kong\_public\_sub\_domain\_names) | List of kong public sub domain names | `list(any)` | n/a | yes |
-| <a name="input_log_configuration_for_kong"></a> [log\_configuration\_for\_kong](#input\_log\_configuration\_for\_kong) | Log configuration for kong | `any` | <pre>{<br>  "logDriver": "awslogs",<br>  "options": {<br>    "awslogs-group": "/ecs/kong",<br>    "awslogs-region": "ap-south-1",<br>    "awslogs-stream-prefix": "app"<br>  }<br>}</pre> | no |
+| <a name="input_log_configuration_for_kong"></a> [log\_configuration\_for\_kong](#input\_log\_configuration\_for\_kong) | Log configuration for kong | `any` | `{}` | no |
 | <a name="input_maintenance_window"></a> [maintenance\_window](#input\_maintenance\_window) | The window to perform maintenance in.Syntax:ddd:hh24:mi-ddd:hh24:mi | `string` | `null` | no |
 | <a name="input_manage_master_user_password"></a> [manage\_master\_user\_password](#input\_manage\_master\_user\_password) | Whether to manage master user password | `bool` | `false` | no |
 | <a name="input_managed_scaling_status"></a> [managed\_scaling\_status](#input\_managed\_scaling\_status) | Mangaed scaling | `string` | `"ENABLED"` | no |
