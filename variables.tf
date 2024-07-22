@@ -205,14 +205,7 @@ variable "container_image" {
 variable "log_configuration_for_kong" {
   description = "Log configuration for kong"
   type        = any
-  default = {
-    logDriver = "awslogs"
-    options = {
-      "awslogs-region"        = "ap-south-1"
-      "awslogs-group"         = "/ecs/kong"
-      "awslogs-stream-prefix" = "app"
-    }
-  }
+  default     = {}
 }
 
 variable "cpu_for_kong_task" {
