@@ -16,10 +16,10 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ecs_kong"></a> [ecs\_kong](#module\_ecs\_kong) | ../terraform-aws-ecs-deployment | n/a |
+| <a name="module_ecs_kong"></a> [ecs\_kong](#module\_ecs\_kong) | github.com/infraspecdev/terraform-aws-ecs-deployment | v1.1.1 |
 | <a name="module_ecs_node_security_group"></a> [ecs\_node\_security\_group](#module\_ecs\_node\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.1.2 |
 | <a name="module_ecs_task_security_group"></a> [ecs\_task\_security\_group](#module\_ecs\_task\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.1.2 |
-| <a name="module_internal_alb_kong"></a> [internal\_alb\_kong](#module\_internal\_alb\_kong) | ../terraform-aws-ecs-deployment//modules/alb | n/a |
+| <a name="module_internal_alb_kong"></a> [internal\_alb\_kong](#module\_internal\_alb\_kong) | github.com/infraspecdev/terraform-aws-ecs-deployment//modules/alb | v1.1.1 |
 | <a name="module_internal_alb_security_group"></a> [internal\_alb\_security\_group](#module\_internal\_alb\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.1.2 |
 | <a name="module_kong_internal_dns_record"></a> [kong\_internal\_dns\_record](#module\_kong\_internal\_dns\_record) | ./modules/route-53-record | n/a |
 | <a name="module_kong_public_dns_record"></a> [kong\_public\_dns\_record](#module\_kong\_public\_dns\_record) | ./modules/route-53-record | n/a |
