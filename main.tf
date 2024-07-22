@@ -185,8 +185,8 @@ module "ecs_kong" {
     network_mode       = local.kong.network_mode
     cpu                = var.cpu_for_kong_task
     memory             = var.memory_for_kong_task
-    task_role_arn      = aws_iam_role.ecs_task_role.arn
-    execution_role_arn = aws_iam_role.ecs_exec_role.arn
+    task_role_arn      = module.ecs_task_role.role_arn
+    execution_role_arn = module.ecs_exec_role.role_arn
 
     container_definitions = [
       {

@@ -1,5 +1,3 @@
-# Main
-
 ## Requirements
 
 No requirements.
