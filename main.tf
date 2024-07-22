@@ -154,7 +154,7 @@ module "ecs_task_security_group" {
 }
 
 module "ecs_kong" {
-  source       = "../terraform-aws-ecs-deployment"
+  source       = "github.com/infraspecdev/terraform-aws-ecs-deployment?ref=v1.1.1"
   vpc_id       = var.vpc_id
   cluster_name = var.cluster_name
 
@@ -300,7 +300,7 @@ module "ecs_kong" {
 }
 
 module "internal_alb_kong" {
-  source                     = "../terraform-aws-ecs-deployment//modules/alb"
+  source                     = "github.com/infraspecdev/terraform-aws-ecs-deployment//modules/alb?ref=v1.1.1"
   name                       = "${local.kong.name}-internal"
   internal                   = true
   subnets_ids                = var.private_subnet_ids
