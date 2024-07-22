@@ -45,10 +45,13 @@ locals {
       { containerPort = 8002, hostPort = 8002 }
     ]
 
-    admin_port          = 8001
-    proxy_port          = 8000
-    public_target_group = "kong_public"
-    public_domains      = [for subdomain in var.kong_public_sub_domain_names : "${subdomain}.${var.base_domain}"]
+
+    admin_port            = 8001
+    proxy_port            = 8000
+    public_target_group   = "kong_public"
+    internal_target_group = "kong_internal"
+    public_domains        = [for subdomain in var.kong_public_sub_domain_names : "${subdomain}.${var.base_domain}"]
+    admin_domains         = [for subdomain in var.kong_admin_sub_domain_names : "${subdomain}.${var.base_domain}"]
   }
 
   kong_parameters = {
@@ -161,7 +164,33 @@ module "ecs_node_security_group" {
   tags = local.default_tags
 }
 
-module "alb_security_group" {
+data "aws_vpc" "vpc" {
+  id = var.vpc_id
+}
+
+module "internal_alb_security_group" {
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "~> 5.1.2"
+
+  name   = local.kong.alb_sg_name
+  vpc_id = var.vpc_id
+
+  ingress_with_cidr_blocks = [{
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = data.aws_vpc.vpc.cidr_block
+  }]
+  egress_with_cidr_blocks = [{
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = "0.0.0.0/0"
+  }, ]
+  tags = local.default_tags
+}
+
+module "public_alb_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.1.2"
 
@@ -221,6 +250,11 @@ module "ecs_kong" {
     desired_count        = var.desired_count_for_kong_service
     force_new_deployment = var.force_new_deployment
     load_balancer = [
+      {
+        target_group_arn = module.internal_alb_kong.target_groups_arns[local.kong.internal_target_group]
+        container_name   = local.kong.name
+        container_port   = local.kong.admin_port
+      },
       {
         target_group   = local.kong.public_target_group
         container_name = local.kong.name
@@ -303,14 +337,14 @@ module "ecs_kong" {
   ]
 
   load_balancer = {
-    name                       = local.kong.name
+    name                       = "${local.kong.name}-public"
     internal                   = false
     subnets_ids                = var.public_subnet_ids
-    security_groups_ids        = [module.alb_security_group.security_group_id]
+    security_groups_ids        = [module.public_alb_security_group.security_group_id]
     enable_deletion_protection = false
     target_groups = {
       (local.kong.public_target_group) = {
-        name        = "kong-public"
+        name        = "${local.kong.name}-public"
         port        = 8000
         protocol    = "HTTP"
         target_type = "ip"
@@ -330,7 +364,7 @@ module "ecs_kong" {
       kong_https = {
         port            = 443
         protocol        = "HTTPS"
-        certificate_arn = module.route53_record_kong_public_dns.certificate_arn
+        certificate_arn = module.kong_public_dns_record.certificate_arn
         ssl_policy      = var.ssl_policy
 
         default_action = [
@@ -352,11 +386,67 @@ module "ecs_kong" {
   depends_on = [module.kong_rds]
 }
 
-module "route53_record_kong_public_dns" {
+module "internal_alb_kong" {
+  source                     = "../terraform-aws-ecs-deployment//modules/alb"
+  name                       = "${local.kong.name}-internal"
+  internal                   = true
+  subnets_ids                = var.private_subnet_ids
+  security_groups_ids        = [module.internal_alb_security_group.security_group_id]
+  enable_deletion_protection = false
+  target_groups = {
+    (local.kong.internal_target_group) = {
+      name        = "${local.kong.name}-internal"
+      port        = 8001
+      protocol    = "HTTP"
+      target_type = "ip"
+      vpc_id      = var.vpc_id
+      health_check = {
+        enabled             = true
+        path                = "/status"
+        port                = local.kong.admin_port
+        matcher             = 200
+        interval            = 120
+        timeout             = 5
+        healthy_threshold   = 2
+        unhealthy_threshold = 3
+      }
+    }
+  }
+  listeners = {
+    kong_http = {
+      port     = 80
+      protocol = "HTTP"
+
+      default_action = [
+        {
+          type         = "forward"
+          target_group = local.kong.internal_target_group
+          conditions = [
+            {
+              field  = "host-header"
+              values = local.kong.admin_domains
+            }
+          ]
+        },
+      ]
+    }
+  }
+}
+
+module "kong_public_dns_record" {
   source = "./modules/route-53-record"
 
   base_domain  = var.base_domain
   endpoints    = var.kong_public_sub_domain_names
   alb_dns_name = module.ecs_kong.alb_dns_name
+  alb_zone_id  = module.ecs_kong.alb_zone_id
+}
+
+module "kong_internal_dns_record" {
+  source = "./modules/route-53-record"
+
+  base_domain  = var.base_domain
+  endpoints    = var.kong_admin_sub_domain_names
+  alb_dns_name = module.internal_alb_kong.dns_name
   alb_zone_id  = module.ecs_kong.alb_zone_id
 }

@@ -125,6 +125,11 @@ variable "kong_public_sub_domain_names" {
   type        = list(any)
 }
 
+variable "kong_admin_sub_domain_names" {
+  description = "List of kong admin sub domain names"
+  type        = list(any)
+}
+
 variable "base_domain" {
   type        = string
   description = "Base domain"
@@ -205,7 +210,7 @@ variable "container_image" {
 variable "log_configuration_for_kong" {
   description = "Log configuration for kong"
   type        = any
-  default     = {}
+  default     = null
 }
 
 variable "cpu_for_kong_task" {
