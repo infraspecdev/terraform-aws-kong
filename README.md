@@ -35,7 +35,6 @@
 | [aws_iam_policy_document.ecs_node_doc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.ecs_task_doc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_ssm_parameter.ecs_node_ami](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
-| [aws_vpc.vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
 
 ## Inputs
 
@@ -58,11 +57,9 @@
 | <a name="input_desired_count_for_kong_service"></a> [desired\_count\_for\_kong\_service](#input\_desired\_count\_for\_kong\_service) | Desired count for kong service | `number` | `1` | no |
 | <a name="input_ecs_node_security_group_id"></a> [ecs\_node\_security\_group\_id](#input\_ecs\_node\_security\_group\_id) | ECS node security group id | `string` | `null` | no |
 | <a name="input_ecs_task_security_group_id"></a> [ecs\_task\_security\_group\_id](#input\_ecs\_task\_security\_group\_id) | ECS task security group id | `string` | `null` | no |
-| <a name="input_endpoints"></a> [endpoints](#input\_endpoints) | List of endpoints that will expose the load balancer | `list(any)` | n/a | yes |
 | <a name="input_force_new_deployment"></a> [force\_new\_deployment](#input\_force\_new\_deployment) | Whether to force new deployment | `bool` | `true` | no |
 | <a name="input_instance_type_for_kong"></a> [instance\_type\_for\_kong](#input\_instance\_type\_for\_kong) | Instance type for kong | `string` | `"t2.micro"` | no |
 | <a name="input_key_name_for_kong"></a> [key\_name\_for\_kong](#input\_key\_name\_for\_kong) | Key name for to SSH into kong instance | `string` | `null` | no |
-| <a name="input_kong_admin_sub_domain_name"></a> [kong\_admin\_sub\_domain\_name](#input\_kong\_admin\_sub\_domain\_name) | Sub domain name for kong admin gui | `string` | `"admin"` | no |
 | <a name="input_kong_public_sub_domain_names"></a> [kong\_public\_sub\_domain\_names](#input\_kong\_public\_sub\_domain\_names) | List of kong public sub domain names | `list(any)` | n/a | yes |
 | <a name="input_log_configuration_for_kong"></a> [log\_configuration\_for\_kong](#input\_log\_configuration\_for\_kong) | Log configuration for kong | `any` | <pre>{<br>  "logDriver": "awslogs",<br>  "options": {<br>    "awslogs-group": "/ecs/kong",<br>    "awslogs-region": "ap-south-1",<br>    "awslogs-stream-prefix": "app"<br>  }<br>}</pre> | no |
 | <a name="input_maintenance_window"></a> [maintenance\_window](#input\_maintenance\_window) | The window to perform maintenance in.Syntax:ddd:hh24:mi-ddd:hh24:mi | `string` | `null` | no |
@@ -81,7 +78,6 @@
 | <a name="input_public_subnet_ids"></a> [public\_subnet\_ids](#input\_public\_subnet\_ids) | List of public subnet id | `list(string)` | n/a | yes |
 | <a name="input_rds_db_tags"></a> [rds\_db\_tags](#input\_rds\_db\_tags) | List of tags | `map(string)` | `{}` | no |
 | <a name="input_rds_instance_class"></a> [rds\_instance\_class](#input\_rds\_instance\_class) | The instance class to use | `string` | `"db.t3.micro"` | no |
-| <a name="input_region"></a> [region](#input\_region) | AWS region | `string` | n/a | yes |
 | <a name="input_ssl_policy"></a> [ssl\_policy](#input\_ssl\_policy) | (Optional) Name of the SSL Policy for the listener. | `string` | `"ELBSecurityPolicy-2016-08"` | no |
 | <a name="input_target_capacity"></a> [target\_capacity](#input\_target\_capacity) | Target Capacity for managed scaling | `number` | `100` | no |
 | <a name="input_use_default_ecs_node_security_group"></a> [use\_default\_ecs\_node\_security\_group](#input\_use\_default\_ecs\_node\_security\_group) | Whether to use default ECS node security group | `bool` | `true` | no |
