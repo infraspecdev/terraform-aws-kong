@@ -1,7 +1,3 @@
-data "aws_ssm_parameter" "ecs_node_ami" {
-  name = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
-}
-
 module "postgres_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.1.2"
@@ -86,10 +82,6 @@ module "ecs_node_security_group" {
   tags = local.default_tags
 }
 
-data "aws_vpc" "vpc" {
-  id = var.vpc_id
-}
-
 module "internal_alb_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.1.2"
@@ -160,7 +152,6 @@ module "ecs_task_security_group" {
   }, ]
   tags = local.default_tags
 }
-
 
 module "ecs_kong" {
   source       = "../terraform-aws-ecs-deployment"
