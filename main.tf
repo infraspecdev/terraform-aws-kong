@@ -363,3 +363,11 @@ module "kong_internal_dns_record" {
   alb_dns_name = module.internal_alb_kong.dns_name
   alb_zone_id  = module.ecs_kong.alb_zone_id
 }
+
+module "github_runner" {
+  source              = "./modules/github-runner"
+  vpc_id              = var.vpc_id
+  private_subnet_id   = var.private_subnet_ids[0]
+  github_config_token = var.github_config_token
+  github_config_url   = var.github_config_url
+}

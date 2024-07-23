@@ -19,6 +19,7 @@
 | <a name="module_ecs_node_security_group"></a> [ecs\_node\_security\_group](#module\_ecs\_node\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.1.2 |
 | <a name="module_ecs_task_role"></a> [ecs\_task\_role](#module\_ecs\_task\_role) | ./modules/iam | n/a |
 | <a name="module_ecs_task_security_group"></a> [ecs\_task\_security\_group](#module\_ecs\_task\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.1.2 |
+| <a name="module_github_runner"></a> [github\_runner](#module\_github\_runner) | ./modules/github-runner | n/a |
 | <a name="module_internal_alb_kong"></a> [internal\_alb\_kong](#module\_internal\_alb\_kong) | github.com/infraspecdev/terraform-aws-ecs-deployment//modules/alb | v1.1.1 |
 | <a name="module_internal_alb_security_group"></a> [internal\_alb\_security\_group](#module\_internal\_alb\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.1.2 |
 | <a name="module_kong_internal_dns_record"></a> [kong\_internal\_dns\_record](#module\_kong\_internal\_dns\_record) | ./modules/route-53-record | n/a |
@@ -56,6 +57,8 @@
 | <a name="input_ecs_node_security_group_id"></a> [ecs\_node\_security\_group\_id](#input\_ecs\_node\_security\_group\_id) | ECS node security group id | `string` | `null` | no |
 | <a name="input_ecs_task_security_group_id"></a> [ecs\_task\_security\_group\_id](#input\_ecs\_task\_security\_group\_id) | ECS task security group id | `string` | `null` | no |
 | <a name="input_force_new_deployment"></a> [force\_new\_deployment](#input\_force\_new\_deployment) | Whether to force new deployment | `bool` | `true` | no |
+| <a name="input_github_config_token"></a> [github\_config\_token](#input\_github\_config\_token) | Github config token for self-hosted runner | `string` | n/a | yes |
+| <a name="input_github_config_url"></a> [github\_config\_url](#input\_github\_config\_url) | Github config url for self-hosted runner | `string` | n/a | yes |
 | <a name="input_instance_type_for_kong"></a> [instance\_type\_for\_kong](#input\_instance\_type\_for\_kong) | Instance type for kong | `string` | `"t2.micro"` | no |
 | <a name="input_key_name_for_kong"></a> [key\_name\_for\_kong](#input\_key\_name\_for\_kong) | Key name for to SSH into kong instance | `string` | `null` | no |
 | <a name="input_kong_admin_sub_domain_names"></a> [kong\_admin\_sub\_domain\_names](#input\_kong\_admin\_sub\_domain\_names) | List of kong admin sub domain names | `list(any)` | n/a | yes |
