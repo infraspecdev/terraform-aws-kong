@@ -10,8 +10,8 @@ module "postgres_security_group" {
     {
       from_port   = 0
       to_port     = 5432
-      protocol    = "-1"
-      cidr_blocks = "0.0.0.0/0"
+      protocol    = "tcp"
+      cidr_blocks = data.aws_vpc.vpc.cidr_block
     },
   ]
   egress_with_cidr_blocks = [{
@@ -71,7 +71,7 @@ module "ecs_node_security_group" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = "0.0.0.0/0"
+    cidr_blocks = data.aws_vpc.vpc.cidr_block
   }]
   egress_with_cidr_blocks = [{
     from_port   = 0
@@ -141,7 +141,7 @@ module "ecs_task_security_group" {
       from_port   = 0
       to_port     = 0
       protocol    = "-1"
-      cidr_blocks = "0.0.0.0/0"
+      cidr_blocks = data.aws_vpc.vpc.cidr_block
     },
   ]
   egress_with_cidr_blocks = [{
