@@ -72,24 +72,6 @@ variable "performance_insights_retention_period" {
   default     = 7
 }
 
-variable "db_name" {
-  description = "Database name"
-  type        = string
-  default     = "kong"
-}
-
-variable "db_username" {
-  description = "Username for database"
-  type        = string
-  default     = "kong"
-}
-
-variable "db_password" {
-  description = "Username for database"
-  type        = string
-  default     = "defaultpassword"
-}
-
 variable "rds_db_tags" {
   description = "List of tags"
   type        = map(string)
@@ -253,14 +235,4 @@ variable "instance_type_for_kong" {
   description = "Instance type for kong"
   type        = string
   default     = "t2.micro"
-}
-
-variable "github_config_token" {
-  description = "Github config token for self-hosted runner"
-  type        = string
-}
-
-variable "github_config_url" {
-  description = "Github config url for self-hosted runner"
-  type        = string
 }

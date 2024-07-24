@@ -54,14 +54,31 @@ locals {
     admin_domains         = [for subdomain in var.kong_admin_sub_domain_names : "${subdomain}.${var.base_domain}"]
   }
 
+  rds_parameters = [
+    "POSTGRES_USERNAME",
+    "POSTGRES_PASSWORD",
+    "POSTGRES_DB_NAME"
+  ]
+
+  github_parameters = [
+    "CONFIG_TOKEN",
+    "CONFIG_URL"
+  ]
+
+  postgres_username   = data.aws_ssm_parameter.rds["POSTGRES_USERNAME"].value
+  postgres_password   = data.aws_ssm_parameter.rds["POSTGRES_PASSWORD"].value
+  postgres_db_name    = data.aws_ssm_parameter.rds["POSTGRES_DB_NAME"].value
+  github_config_token = data.aws_ssm_parameter.github["CONFIG_TOKEN"].value
+  github_config_url   = data.aws_ssm_parameter.github["CONFIG_URL"].value
+
   kong_parameters = {
-    "KONG_ADMIN_LISTEN"     = "0.0.0.0:8001, 0.0.0.0:8444 ssl"
-    "KONG_PROXY_LISTEN"     = "0.0.0.0:8000, 0.0.0.0:8443 ssl, 0.0.0.0:9080 http2, 0.0.0.0:9081 http2 ssl"
+    "KONG_ADMIN_LISTEN"     = "0.0.0.0:8001"
+    "KONG_PROXY_LISTEN"     = "0.0.0.0:8000"
     "KONG_DATABASE"         = local.rds_engine
     "KONG_PG_HOST"          = module.kong_rds.db_instance_address
-    "KONG_PG_USER"          = var.db_username
-    "KONG_PG_PASSWORD"      = var.db_password
-    "KONG_PG_DATABASE"      = var.db_name
+    "KONG_PG_USER"          = local.postgres_username
+    "KONG_PG_PASSWORD"      = local.postgres_password
+    "KONG_PG_DATABASE"      = local.postgres_db_name
     "KONG_PROXY_ACCESS_LOG" = "/dev/stdout"
     "KONG_ADMIN_ACCESS_LOG" = "/dev/stdout"
     "KONG_PROXY_ERROR_LOG"  = "/dev/stderr"

@@ -1,3 +1,65 @@
+# Prerequisites for Setting Up AWS SSM Parameters
+
+To configure and manage your AWS resources and GitHub Actions using Secure String parameters in AWS Systems Manager Parameter Store, follow the steps below to add the required parameters:
+
+## AWS CLI Installation
+
+Ensure you have the AWS CLI installed on your machine. You can install the AWS CLI using the following commands based on your operating system:
+
+### Windows
+```sh
+msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
+```
+
+### macOS
+```sh
+brew install awscli
+```
+
+### Linux
+```sh
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+```
+
+## AWS CLI Configuration
+
+Configure the AWS CLI with your AWS credentials and region. Run the following command and follow the prompts to enter your AWS Access Key, Secret Access Key, and default region:
+
+```sh
+aws configure
+```
+
+## Adding Parameters to AWS Systems Manager Parameter Store
+
+Use the following commands to add the required parameters to AWS Systems Manager Parameter Store. These parameters are necessary for configuring your PostgreSQL database and GitHub Actions.
+
+### RDS Parameters
+
+```sh
+aws ssm put-parameter --name "/rds/POSTGRES_USERNAME" --value "value" --type "SecureString"
+aws ssm put-parameter --name "/rds/POSTGRES_PASSWORD" --value "value" --type "SecureString"
+aws ssm put-parameter --name "/rds/POSTGRES_DB_NAME" --value "value" --type "SecureString"
+```
+
+### GitHub Parameters
+
+```sh
+aws ssm put-parameter --name "/github-action/CONFIG_TOKEN" --value "value" --type "SecureString"
+aws ssm put-parameter --name "/github-action/CONFIG_URL" --value "value" --type "SecureString"
+```
+
+## Verifying Parameter Storage
+
+After adding the parameters, you can verify their storage in AWS Systems Manager Parameter Store using the following command:
+
+```sh
+aws ssm get-parameters --names "/rds/POSTGRES_USERNAME" "/rds/POSTGRES_PASSWORD" "/rds/POSTGRES_DB_NAME" "/github-action/CONFIG_TOKEN" "/github-action/CONFIG_URL" --with-decryption
+```
+
+This command will display the values of the stored parameters, ensuring they have been added correctly.
+
 ## Requirements
 
 | Name | Version |
@@ -33,6 +95,8 @@
 | Name | Type |
 |------|------|
 | [aws_ssm_parameter.ecs_node_ami](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
+| [aws_ssm_parameter.github](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
+| [aws_ssm_parameter.rds](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
 | [aws_vpc.vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
 
 ## Inputs
@@ -48,17 +112,12 @@
 | <a name="input_create_db_subnet_group"></a> [create\_db\_subnet\_group](#input\_create\_db\_subnet\_group) | Whether to create a DB subnet group | `bool` | `true` | no |
 | <a name="input_db_allocated_storage"></a> [db\_allocated\_storage](#input\_db\_allocated\_storage) | The amount of allocated storage in GBs | `number` | `20` | no |
 | <a name="input_db_max_allocated_storage"></a> [db\_max\_allocated\_storage](#input\_db\_max\_allocated\_storage) | The maximum amount of allocated storage in GBs | `number` | `100` | no |
-| <a name="input_db_name"></a> [db\_name](#input\_db\_name) | Database name | `string` | `"kong"` | no |
-| <a name="input_db_password"></a> [db\_password](#input\_db\_password) | Username for database | `string` | `"defaultpassword"` | no |
-| <a name="input_db_username"></a> [db\_username](#input\_db\_username) | Username for database | `string` | `"kong"` | no |
 | <a name="input_deletion_protection"></a> [deletion\_protection](#input\_deletion\_protection) | Whether to enable deletion protection | `bool` | `false` | no |
 | <a name="input_desired_capacity"></a> [desired\_capacity](#input\_desired\_capacity) | Desired capacity of auto scaling group | `number` | `2` | no |
 | <a name="input_desired_count_for_kong_service"></a> [desired\_count\_for\_kong\_service](#input\_desired\_count\_for\_kong\_service) | Desired count for kong service | `number` | `1` | no |
 | <a name="input_ecs_node_security_group_id"></a> [ecs\_node\_security\_group\_id](#input\_ecs\_node\_security\_group\_id) | ECS node security group id | `string` | `null` | no |
 | <a name="input_ecs_task_security_group_id"></a> [ecs\_task\_security\_group\_id](#input\_ecs\_task\_security\_group\_id) | ECS task security group id | `string` | `null` | no |
 | <a name="input_force_new_deployment"></a> [force\_new\_deployment](#input\_force\_new\_deployment) | Whether to force new deployment | `bool` | `true` | no |
-| <a name="input_github_config_token"></a> [github\_config\_token](#input\_github\_config\_token) | Github config token for self-hosted runner | `string` | n/a | yes |
-| <a name="input_github_config_url"></a> [github\_config\_url](#input\_github\_config\_url) | Github config url for self-hosted runner | `string` | n/a | yes |
 | <a name="input_instance_type_for_kong"></a> [instance\_type\_for\_kong](#input\_instance\_type\_for\_kong) | Instance type for kong | `string` | `"t2.micro"` | no |
 | <a name="input_key_name_for_kong"></a> [key\_name\_for\_kong](#input\_key\_name\_for\_kong) | Key name for to SSH into kong instance | `string` | `null` | no |
 | <a name="input_kong_admin_sub_domain_names"></a> [kong\_admin\_sub\_domain\_names](#input\_kong\_admin\_sub\_domain\_names) | List of kong admin sub domain names | `list(any)` | n/a | yes |

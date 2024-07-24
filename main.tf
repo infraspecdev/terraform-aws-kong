@@ -41,10 +41,10 @@ module "kong_rds" {
   multi_az              = var.multi_az
 
   manage_master_user_password = var.manage_master_user_password
-  db_name                     = var.db_name
-  username                    = var.db_username
+  db_name                     = local.postgres_db_name
+  username                    = local.postgres_username
   port                        = local.postgres.port
-  password                    = var.db_password
+  password                    = local.postgres_password
 
   backup_retention_period = var.backup_retention_period
   backup_window           = var.backup_window
@@ -368,6 +368,6 @@ module "github_runner" {
   source              = "./modules/github-runner"
   vpc_id              = var.vpc_id
   private_subnet_id   = var.private_subnet_ids[0]
-  github_config_token = var.github_config_token
-  github_config_url   = var.github_config_url
+  github_config_token = local.github_config_token
+  github_config_url   = local.github_config_url
 }
