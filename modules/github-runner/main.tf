@@ -5,9 +5,15 @@ resource "aws_instance" "github_runner" {
   vpc_security_group_ids = [aws_security_group.github_runner.id]
   key_name               = var.key_name
   user_data = templatefile("${path.module}/scripts/self-hosted-runner.sh", {
-    CONFIG_TOKEN = var.github_config_token
-    CONFIG_URL   = var.github_config_url
+    GITHUB_ORG  = var.github_org
+    GITHUB_REPO = var.github_repo
+    GITHUB_PAT  = var.github_token
   })
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
   tags = {
     Name = local.ubuntu_instance_name
   }

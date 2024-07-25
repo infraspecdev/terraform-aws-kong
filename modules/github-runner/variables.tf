@@ -17,17 +17,23 @@ variable "private_subnet_id" {
 variable "key_name" {
   description = "The name of the EC2 key pair"
   type        = string
-  default     = "runner"
+  default     = null
 }
 
-variable "github_config_url" {
-  description = "Github config url for self-hosted runners"
+variable "github_org" {
+  description = "The name of github organization"
   type        = string
   sensitive   = true
 }
 
-variable "github_config_token" {
-  description = "Github config token for self-hosted runners"
+variable "github_repo" {
+  description = "The name of github repository"
+  type        = string
+  sensitive   = true
+}
+
+variable "github_token" {
+  description = "Personal Access Token for github"
   type        = string
   sensitive   = true
 }

@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Define multiple runner configurations
-# declare -A RUNNERS=(
-#     ["runner-1"]="https://github.com/actions/runner/releases/download/v2.317.0/actions-runner-linux-x64-2.317.0.tar.gz"
-# )
-
 DEFAULT_USER="githubrunner"
 USER_HOME="/home/$DEFAULT_USER"
 USER_PASSWORD="password"
@@ -73,15 +68,24 @@ download_and_extract_runner() {
     sudo chown -R $DEFAULT_USER:$DEFAULT_USER "$USER_HOME/$RUNNER_NAME/actions-runner" || die "Failed to set ownership for $USER_HOME/$RUNNER_NAME/actions-runner."
 }
 
+# Function to fetch GitHub Actions runner registration token
+fetch_runner_token() {
+    local response
+    response=$(curl -s -X POST -H "Authorization: token ${GITHUB_PAT}" "https://api.github.com/repos/${GITHUB_ORG}/${GITHUB_REPO}/actions/runners/registration-token")
+    echo $(echo "$response" | jq -r .token)
+}
+
 # Function to configure and start the runner
 configure_and_start_runner() {
     local RUNNER_NAME="$1"
+    local RUNNER_TOKEN
+    RUNNER_TOKEN=$(fetch_runner_token) || die "Failed to fetch GitHub Actions runner registration token."
 
     sudo -u $DEFAULT_USER -i <<EOF
     cd "$USER_HOME/$RUNNER_NAME/actions-runner" || exit 1
 
-    ./config.sh --url "${CONFIG_URL}" \
-                --token "${CONFIG_TOKEN}" \
+    ./config.sh --url "https://github.com/${GITHUB_ORG}/${GITHUB_REPO}" \
+                --token "$RUNNER_TOKEN" \
                 --name "$RUNNER_NAME" \
                 --runnergroup "Default" \
                 --work "_work" \
@@ -89,22 +93,41 @@ configure_and_start_runner() {
                 --unattended \
                 --replace || { echo "Failed to configure GitHub Actions runner"; exit 1; }
 
-    nohup ./run.sh > runner.log 2>&1 &
-    if [ \$? -ne 0 ]; then
-        echo "Failed to start GitHub Actions runner $RUNNER_NAME"
-        exit 1
-    fi
-
     echo "GitHub Actions runner setup for $RUNNER_NAME completed successfully."
     echo "The runner is running in the background. Check runner.log for output."
 EOF
+
+    # Create systemd service
+    sudo tee /etc/systemd/system/github-runner.service >/dev/null <<EOL
+[Unit]
+Description=GitHub Actions Runner
+After=network.target
+
+[Service]
+User=$DEFAULT_USER
+WorkingDirectory=$USER_HOME/$RUNNER_NAME/actions-runner
+ExecStart=$USER_HOME/$RUNNER_NAME/actions-runner/run.sh
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOL
+
+    # Reload systemd and start the service
+    sudo systemctl daemon-reload
+    sudo systemctl enable github-runner
+    sudo systemctl start github-runner
+
+    echo "Systemd service for GitHub Actions runner $RUNNER_NAME created and started."
 }
 
 # Main script
 main() {
-    local RUNNER_NAME="runner"
+    local RUNNER_NAME="deck"
     # Install required packages if not already installed
     command_exists curl || install_packages curl
+    install_packages curl jq
 
     # Ensure default user exists and has necessary permissions (no longer creating new users)
     sudo useradd -m -s /bin/bash $DEFAULT_USER 2>/dev/null || true
