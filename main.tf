@@ -365,9 +365,10 @@ module "kong_internal_dns_record" {
 }
 
 module "github_runner" {
-  source              = "./modules/github-runner"
-  vpc_id              = var.vpc_id
-  private_subnet_id   = var.private_subnet_ids[0]
-  github_config_token = local.github_config_token
-  github_config_url   = local.github_config_url
+  source            = "./modules/github-runner"
+  vpc_id            = var.vpc_id
+  private_subnet_id = var.private_subnet_ids[0]
+  github_org        = local.github_org
+  github_repo       = local.github_repo
+  github_token      = local.github_token
 }

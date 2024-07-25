@@ -46,8 +46,9 @@ aws ssm put-parameter --name "/rds/POSTGRES_DB_NAME" --value "value" --type "Sec
 ### GitHub Parameters
 
 ```sh
-aws ssm put-parameter --name "/github-action/CONFIG_TOKEN" --value "value" --type "SecureString"
-aws ssm put-parameter --name "/github-action/CONFIG_URL" --value "value" --type "SecureString"
+aws ssm put-parameter --name "/github-action/GITHUB_ORG" --value "value" --type "SecureString"
+aws ssm put-parameter --name "/github-action/GITHUB_REPO" --value "value" --type "SecureString"
+aws ssm put-parameter --name "/github-action/GITHUB_TOKEN" --value "value" --type "SecureString"
 ```
 
 ## Verifying Parameter Storage
@@ -55,7 +56,7 @@ aws ssm put-parameter --name "/github-action/CONFIG_URL" --value "value" --type 
 After adding the parameters, you can verify their storage in AWS Systems Manager Parameter Store using the following command:
 
 ```sh
-aws ssm get-parameters --names "/rds/POSTGRES_USERNAME" "/rds/POSTGRES_PASSWORD" "/rds/POSTGRES_DB_NAME" "/github-action/CONFIG_TOKEN" "/github-action/CONFIG_URL" --with-decryption
+aws ssm get-parameters --names "/rds/POSTGRES_USERNAME" "/rds/POSTGRES_PASSWORD" "/rds/POSTGRES_DB_NAME" "/github-action/GITHUB_ORG" "/github-action/GITHUB_REPO" "/github-action/GITHUB_TOKEN" --with-decryption
 ```
 
 This command will display the values of the stored parameters, ensuring they have been added correctly.

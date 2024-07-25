@@ -61,15 +61,17 @@ locals {
   ]
 
   github_parameters = [
-    "CONFIG_TOKEN",
-    "CONFIG_URL"
+    "GITHUB_ORG",
+    "GITHUB_REPO",
+    "GITHUB_TOKEN"
   ]
 
-  postgres_username   = data.aws_ssm_parameter.rds["POSTGRES_USERNAME"].value
-  postgres_password   = data.aws_ssm_parameter.rds["POSTGRES_PASSWORD"].value
-  postgres_db_name    = data.aws_ssm_parameter.rds["POSTGRES_DB_NAME"].value
-  github_config_token = data.aws_ssm_parameter.github["CONFIG_TOKEN"].value
-  github_config_url   = data.aws_ssm_parameter.github["CONFIG_URL"].value
+  postgres_username = data.aws_ssm_parameter.rds["POSTGRES_USERNAME"].value
+  postgres_password = data.aws_ssm_parameter.rds["POSTGRES_PASSWORD"].value
+  postgres_db_name  = data.aws_ssm_parameter.rds["POSTGRES_DB_NAME"].value
+  github_org        = data.aws_ssm_parameter.github["GITHUB_ORG"].value
+  github_repo       = data.aws_ssm_parameter.github["GITHUB_REPO"].value
+  github_token      = data.aws_ssm_parameter.github["GITHUB_TOKEN"].value
 
   kong_parameters = {
     "KONG_ADMIN_LISTEN"     = "0.0.0.0:8001"
