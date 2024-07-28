@@ -1,6 +1,6 @@
 ### Architectural Diagram
 
-![Kong](https://github.com/user-attachments/assets/29f9deb0-7c29-43cb-959f-b33bcf4b2540)
+![Kong](https://github.com/user-attachments/assets/3dda9db7-cf8e-4cd2-a507-4e50f9252ffe)
 
 # Prerequisites for Setting Up AWS SSM Parameters
 
