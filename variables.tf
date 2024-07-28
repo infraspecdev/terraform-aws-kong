@@ -141,30 +141,6 @@ variable "target_capacity" {
   default     = 100
 }
 
-variable "use_default_ecs_node_security_group" {
-  description = "Whether to use default ECS node security group"
-  type        = bool
-  default     = true
-}
-
-variable "ecs_node_security_group_id" {
-  description = "ECS node security group id"
-  type        = string
-  default     = null
-}
-
-variable "use_default_ecs_task_security_group" {
-  description = "Whether to use default ECS task security group"
-  type        = bool
-  default     = true
-}
-
-variable "ecs_task_security_group_id" {
-  description = "ECS task security group id"
-  type        = string
-  default     = null
-}
-
 variable "desired_capacity" {
   description = "Desired capacity of auto scaling group"
   type        = number

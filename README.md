@@ -116,8 +116,6 @@ This command will display the values of the stored parameters, ensuring they hav
 | <a name="input_deletion_protection"></a> [deletion\_protection](#input\_deletion\_protection) | Whether to enable deletion protection | `bool` | `false` | no |
 | <a name="input_desired_capacity"></a> [desired\_capacity](#input\_desired\_capacity) | Desired capacity of auto scaling group | `number` | `2` | no |
 | <a name="input_desired_count_for_kong_service"></a> [desired\_count\_for\_kong\_service](#input\_desired\_count\_for\_kong\_service) | Desired count for kong service | `number` | `1` | no |
-| <a name="input_ecs_node_security_group_id"></a> [ecs\_node\_security\_group\_id](#input\_ecs\_node\_security\_group\_id) | ECS node security group id | `string` | `null` | no |
-| <a name="input_ecs_task_security_group_id"></a> [ecs\_task\_security\_group\_id](#input\_ecs\_task\_security\_group\_id) | ECS task security group id | `string` | `null` | no |
 | <a name="input_force_new_deployment"></a> [force\_new\_deployment](#input\_force\_new\_deployment) | Whether to force new deployment | `bool` | `true` | no |
 | <a name="input_instance_type_for_kong"></a> [instance\_type\_for\_kong](#input\_instance\_type\_for\_kong) | Instance type for kong | `string` | `"t2.micro"` | no |
 | <a name="input_key_name_for_kong"></a> [key\_name\_for\_kong](#input\_key\_name\_for\_kong) | Key name for to SSH into kong instance | `string` | `null` | no |
@@ -142,8 +140,6 @@ This command will display the values of the stored parameters, ensuring they hav
 | <a name="input_rds_instance_class"></a> [rds\_instance\_class](#input\_rds\_instance\_class) | The instance class to use | `string` | `"db.t3.micro"` | no |
 | <a name="input_ssl_policy"></a> [ssl\_policy](#input\_ssl\_policy) | (Optional) Name of the SSL Policy for the listener. | `string` | `"ELBSecurityPolicy-2016-08"` | no |
 | <a name="input_target_capacity"></a> [target\_capacity](#input\_target\_capacity) | Target Capacity for managed scaling | `number` | `100` | no |
-| <a name="input_use_default_ecs_node_security_group"></a> [use\_default\_ecs\_node\_security\_group](#input\_use\_default\_ecs\_node\_security\_group) | Whether to use default ECS node security group | `bool` | `true` | no |
-| <a name="input_use_default_ecs_task_security_group"></a> [use\_default\_ecs\_task\_security\_group](#input\_use\_default\_ecs\_task\_security\_group) | Whether to use default ECS task security group | `bool` | `true` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The ID of the VPC | `string` | n/a | yes |
 
 ## Outputs

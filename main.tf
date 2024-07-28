@@ -204,7 +204,7 @@ module "ecs_kong" {
     ]
     network_configuration = {
       subnets          = var.private_subnet_ids
-      security_groups  = [var.use_default_ecs_task_security_group ? module.ecs_task_security_group.security_group_id : var.ecs_task_security_group_id]
+      security_groups  = [module.ecs_task_security_group.security_group_id]
       assign_public_ip = false
     }
   }
@@ -247,7 +247,7 @@ module "ecs_kong" {
       name                   = local.kong.launch_template_name
       image_id               = local.kong.image_id
       instance_type          = var.instance_type_for_kong
-      vpc_security_group_ids = [var.use_default_ecs_node_security_group ? module.ecs_node_security_group.security_group_id : var.ecs_node_security_group_id]
+      vpc_security_group_ids = [module.ecs_node_security_group.security_group_id]
       key_name               = var.key_name_for_kong
       user_data              = local.ecs.user_data
     }
