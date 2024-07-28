@@ -12,12 +12,20 @@ locals {
     port                 = 5432
   }
 
+
+
   ecs = {
     user_data        = <<EOF
     #!/bin/bash
     echo ECS_CLUSTER=${var.cluster_name} >> /etc/ecs/ecs.config;
     EOF
     ecs_node_sg_name = "kong"
+    iam = {
+      name_prefix           = "kong-ecs-exec"
+      ecs_exec_policy_arn   = ["arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"]
+      principal_type        = "Service"
+      principal_identifiers = ["ecs-tasks.amazonaws.com"]
+    }
   }
 
   kong = {

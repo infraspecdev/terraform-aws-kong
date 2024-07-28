@@ -178,6 +178,18 @@ module "ecs_task_security_group" {
 }
 
 ################################################################################
+# ECS Execution IAM Role
+################################################################################
+
+module "ecs_exec_role" {
+  source                = "./modules/iam"
+  name_prefix           = local.ecs.iam.name_prefix
+  principal_type        = local.ecs.iam.principal_type
+  principal_identifiers = local.ecs.iam.principal_identifiers
+  policy_arns           = local.ecs.iam.ecs_exec_policy_arn
+}
+
+################################################################################
 # ECS Kong
 ################################################################################
 
@@ -213,7 +225,7 @@ module "ecs_kong" {
     network_mode       = local.kong.network_mode
     cpu                = var.cpu_for_kong_task
     memory             = var.memory_for_kong_task
-    task_role_arn      = module.ecs_task_role.role_arn
+    task_role_arn      = module.ecs_exec_role.role_arn
     execution_role_arn = module.ecs_exec_role.role_arn
 
     container_definitions = [
