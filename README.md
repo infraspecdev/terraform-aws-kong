@@ -1,3 +1,7 @@
+### Architectural Diagram
+
+![Kong](https://github.com/user-attachments/assets/29f9deb0-7c29-43cb-959f-b33bcf4b2540)
+
 # Prerequisites for Setting Up AWS SSM Parameters
 
 To configure and manage your AWS resources and GitHub Actions using Secure String parameters in AWS Systems Manager Parameter Store, follow the steps below to add the required parameters:
@@ -80,7 +84,6 @@ This command will display the values of the stored parameters, ensuring they hav
 | <a name="module_ecs_exec_role"></a> [ecs\_exec\_role](#module\_ecs\_exec\_role) | ./modules/iam | n/a |
 | <a name="module_ecs_kong"></a> [ecs\_kong](#module\_ecs\_kong) | github.com/infraspecdev/terraform-aws-ecs-deployment | v1.1.1 |
 | <a name="module_ecs_node_security_group"></a> [ecs\_node\_security\_group](#module\_ecs\_node\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.1.2 |
-| <a name="module_ecs_task_role"></a> [ecs\_task\_role](#module\_ecs\_task\_role) | ./modules/iam | n/a |
 | <a name="module_ecs_task_security_group"></a> [ecs\_task\_security\_group](#module\_ecs\_task\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.1.2 |
 | <a name="module_github_runner"></a> [github\_runner](#module\_github\_runner) | ./modules/github-runner | n/a |
 | <a name="module_internal_alb_kong"></a> [internal\_alb\_kong](#module\_internal\_alb\_kong) | github.com/infraspecdev/terraform-aws-ecs-deployment//modules/alb | v1.1.1 |
