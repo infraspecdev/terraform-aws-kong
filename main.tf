@@ -1,3 +1,7 @@
+################################################################################
+# Postgres Security Group
+################################################################################
+
 module "postgres_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.1.2"
@@ -22,6 +26,10 @@ module "postgres_security_group" {
   }, ]
   tags = local.default_tags
 }
+
+################################################################################
+# RDS Kong
+################################################################################
 
 module "kong_rds" {
   source  = "terraform-aws-modules/rds/aws"
@@ -60,6 +68,10 @@ module "kong_rds" {
   tags = merge(local.default_tags, var.rds_db_tags)
 }
 
+################################################################################
+# ECS Node Security Group
+################################################################################
+
 module "ecs_node_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.1.2"
@@ -82,6 +94,10 @@ module "ecs_node_security_group" {
   tags = local.default_tags
 }
 
+################################################################################
+# Internal ALB Security Group
+################################################################################
+
 module "internal_alb_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.1.2"
@@ -103,6 +119,10 @@ module "internal_alb_security_group" {
   }, ]
   tags = local.default_tags
 }
+
+################################################################################
+# Public ALB Security Group
+################################################################################
 
 module "public_alb_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
@@ -129,6 +149,10 @@ module "public_alb_security_group" {
   tags = local.default_tags
 }
 
+################################################################################
+# ECS Task Security Group
+################################################################################
+
 module "ecs_task_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.1.2"
@@ -152,6 +176,10 @@ module "ecs_task_security_group" {
   }, ]
   tags = local.default_tags
 }
+
+################################################################################
+# ECS Kong
+################################################################################
 
 module "ecs_kong" {
   source       = "github.com/infraspecdev/terraform-aws-ecs-deployment?ref=v1.1.1"
@@ -299,6 +327,10 @@ module "ecs_kong" {
   depends_on = [module.kong_rds]
 }
 
+################################################################################
+# Internal ALB Kong
+################################################################################
+
 module "internal_alb_kong" {
   source                     = "github.com/infraspecdev/terraform-aws-ecs-deployment//modules/alb?ref=v1.1.1"
   name                       = "${local.kong.name}-internal"
@@ -346,6 +378,10 @@ module "internal_alb_kong" {
   }
 }
 
+################################################################################
+# Route53 Record For Public ALB
+################################################################################
+
 module "kong_public_dns_record" {
   source = "./modules/route-53-record"
 
@@ -355,6 +391,10 @@ module "kong_public_dns_record" {
   alb_zone_id  = module.ecs_kong.alb_zone_id
 }
 
+################################################################################
+# Route53 Record For Internal ALB
+################################################################################
+
 module "kong_internal_dns_record" {
   source = "./modules/route-53-record"
 
@@ -363,6 +403,10 @@ module "kong_internal_dns_record" {
   alb_dns_name = module.internal_alb_kong.dns_name
   alb_zone_id  = module.ecs_kong.alb_zone_id
 }
+
+################################################################################
+# Self-hosted Github Runner
+################################################################################
 
 module "github_runner" {
   source            = "./modules/github-runner"
