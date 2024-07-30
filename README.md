@@ -1,10 +1,14 @@
-### Architectural Diagram
+# Architectural Diagram
 
 ![Kong](https://github.com/user-attachments/assets/3dda9db7-cf8e-4cd2-a507-4e50f9252ffe)
 
 # Prerequisites for Setting Up AWS SSM Parameters
 
 To configure and manage your AWS resources and GitHub Actions using Secure String parameters in AWS Systems Manager Parameter Store, follow the steps below to add the required parameters:
+
+# Important Note
+
+This setup assumes that the ECS cluster and Auto Scaling Group (ASG) exist with the name default. If you are using different names, you can provide those in the variables section of your Terraform configuration.
 
 ## AWS CLI Installation
 
@@ -75,7 +79,7 @@ This command will display the values of the stored parameters, ensuring they hav
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.60.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.59.0 |
 
 ## Modules
 
