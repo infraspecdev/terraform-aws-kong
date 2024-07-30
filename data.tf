@@ -17,3 +17,7 @@ data "aws_ssm_parameter" "github" {
   name            = "/github-action/${each.value}"
   with_decryption = true
 }
+
+data "aws_autoscaling_group" "this" {
+  name = var.asg_name
+}

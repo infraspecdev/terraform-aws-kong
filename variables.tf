@@ -46,6 +46,13 @@ variable "backup_retention_period" {
 variable "cluster_name" {
   description = "Name of the cluster"
   type        = string
+  default     = "default"
+}
+
+variable "asg_name" {
+  description = "Name of the auto scaling group"
+  type        = string
+  default     = "default"
 }
 
 variable "deletion_protection" {
@@ -141,24 +148,6 @@ variable "target_capacity" {
   default     = 100
 }
 
-variable "desired_capacity" {
-  description = "Desired capacity of auto scaling group"
-  type        = number
-  default     = 2
-}
-
-variable "min_size" {
-  description = "Min size of auto scaling group"
-  type        = number
-  default     = 1
-}
-
-variable "max_size" {
-  description = "Min size of auto scaling group"
-  type        = number
-  default     = 2
-}
-
 variable "container_image" {
   description = "Container image for kong"
   type        = string
@@ -189,26 +178,8 @@ variable "desired_count_for_kong_service" {
   default     = 1
 }
 
-variable "key_name_for_kong" {
-  description = "Key name for to SSH into kong instance"
-  type        = string
-  default     = null
-}
-
-variable "protect_from_scale_in" {
-  description = "Whether to protect from scale in"
-  type        = bool
-  default     = true
-}
-
 variable "force_new_deployment" {
   description = "Whether to force new deployment"
   type        = bool
   default     = true
-}
-
-variable "instance_type_for_kong" {
-  description = "Instance type for kong"
-  type        = string
-  default     = "t2.micro"
 }

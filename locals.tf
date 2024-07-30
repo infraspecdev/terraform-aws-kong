@@ -12,8 +12,6 @@ locals {
     port                 = 5432
   }
 
-
-
   ecs = {
     user_data        = <<EOF
     #!/bin/bash

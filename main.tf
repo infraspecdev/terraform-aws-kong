@@ -194,7 +194,9 @@ module "ecs_exec_role" {
 ################################################################################
 
 module "ecs_kong" {
-  source       = "github.com/infraspecdev/terraform-aws-ecs-deployment?ref=v1.1.1"
+  source  = "infraspecdev/ecs-deployment/aws"
+  version = "~> 2.0.0"
+
   vpc_id       = var.vpc_id
   cluster_name = var.cluster_name
 
@@ -248,31 +250,11 @@ module "ecs_kong" {
     ]
   }
 
-  autoscaling_group = {
-    name                  = local.kong.name
-    vpc_zone_identifier   = var.private_subnet_ids
-    desired_capacity      = var.desired_capacity
-    min_size              = var.min_size
-    max_size              = var.max_size
-    protect_from_scale_in = var.protect_from_scale_in
-    launch_template = {
-      name                   = local.kong.launch_template_name
-      image_id               = local.kong.image_id
-      instance_type          = var.instance_type_for_kong
-      vpc_security_group_ids = [module.ecs_node_security_group.security_group_id]
-      key_name               = var.key_name_for_kong
-      user_data              = local.ecs.user_data
-    }
-
-    iam_role_name               = local.kong.name
-    iam_role_policy_attachments = local.kong.iam_role_policy_attachments
-    iam_instance_profile_name   = local.kong.name
-
-  }
-
+  capacity_provider_default_auto_scaling_group_arn = data.aws_autoscaling_group.this.arn
   capacity_providers = {
     kong = {
-      name = local.kong.name
+      name                           = local.kong.name
+      managed_termination_protection = "DISABLED"
       managed_scaling = {
         maximum_scaling_step_size = var.maximum_scaling_step_size
         minimum_scaling_step_size = var.minimum_scaling_step_size
@@ -344,7 +326,9 @@ module "ecs_kong" {
 ################################################################################
 
 module "internal_alb_kong" {
-  source                     = "github.com/infraspecdev/terraform-aws-ecs-deployment//modules/alb?ref=v1.1.1"
+  source  = "infraspecdev/ecs-deployment/aws//modules/alb"
+  version = "~> 2.0.0"
+
   name                       = "${local.kong.name}-internal"
   internal                   = true
   subnets_ids                = var.private_subnet_ids
