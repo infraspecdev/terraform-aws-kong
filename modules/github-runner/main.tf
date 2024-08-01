@@ -1,7 +1,12 @@
 locals {
   security_group_name_prefix = "github-runner-sg"
+  security_group_description = "Allow ssh ingress within vpc and all egress traffic"
   ubuntu_instance_name       = "github-runner"
   instance_type              = "t2.micro"
+}
+
+data "aws_vpc" "vpc" {
+  id = var.vpc_id
 }
 
 resource "aws_instance" "github_runner" {
@@ -27,14 +32,14 @@ resource "aws_instance" "github_runner" {
 
 resource "aws_security_group" "github_runner" {
   name_prefix = local.security_group_name_prefix
-  description = "Allow ssh ingress and all egress traffic"
+  description = local.security_group_description
   vpc_id      = var.vpc_id
 
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [data.aws_vpc.vpc.cidr_block]
   }
 
   egress {
