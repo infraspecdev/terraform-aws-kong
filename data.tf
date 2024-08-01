@@ -3,13 +3,13 @@ data "aws_vpc" "vpc" {
 }
 
 data "aws_ssm_parameter" "rds" {
-  for_each        = toset(local.rds_parameters)
+  for_each        = toset(local.ssm_parameters.rds)
   name            = "/rds/${each.value}"
   with_decryption = true
 }
 
 data "aws_ssm_parameter" "github" {
-  for_each        = toset(local.github_parameters)
+  for_each        = toset(local.ssm_parameters.github)
   name            = "/github-action/${each.value}"
   with_decryption = true
 }

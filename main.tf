@@ -6,7 +6,7 @@ module "postgres_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.1.2"
 
-  name        = local.name
+  name        = local.rds.sg_name
   description = "Allow all traffic within vpc"
   vpc_id      = var.vpc_id
 
@@ -35,24 +35,24 @@ module "kong_rds" {
   source  = "terraform-aws-modules/rds/aws"
   version = "~> 6.7.0"
 
-  identifier           = local.db_identifier
-  engine               = local.rds_engine
-  engine_version       = local.postgres.engine_version
-  family               = local.postgres.engine_family
-  major_engine_version = local.postgres.major_engine_version
+  identifier           = local.rds.db_identifier
+  engine               = local.rds.engine
+  engine_version       = local.rds.engine_version
+  family               = local.rds.engine_family
+  major_engine_version = local.rds.major_engine_version
   instance_class       = var.rds_instance_class
 
-  storage_encrypted     = local.storage_encrypted
-  storage_type          = local.storage_type
+  storage_encrypted     = local.rds.storage_encrypted
+  storage_type          = local.rds.storage_type
   allocated_storage     = var.db_allocated_storage
   max_allocated_storage = var.db_max_allocated_storage
   multi_az              = var.multi_az
 
   manage_master_user_password = var.manage_master_user_password
-  db_name                     = local.postgres_db_name
-  username                    = local.postgres_username
-  port                        = local.postgres.port
-  password                    = local.postgres_password
+  db_name                     = local.rds.postgres_db_name
+  username                    = local.rds.postgres_username
+  port                        = local.rds.port
+  password                    = local.rds.postgres_password
 
   backup_retention_period = var.backup_retention_period
   backup_window           = var.backup_window
@@ -213,7 +213,7 @@ module "ecs_kong" {
         portMappings = local.kong.portMappings
 
         environment = [
-          for key, value in local.kong_parameters : {
+          for key, value in local.kong.environment : {
             name  = key
             value = value
           }
@@ -382,7 +382,7 @@ module "github_runner" {
   source            = "./modules/github-runner"
   vpc_id            = var.vpc_id
   private_subnet_id = var.private_subnet_ids[0]
-  github_org        = local.github_org
-  github_repo       = local.github_repo
-  github_token      = local.github_token
+  github_org        = local.github.org
+  github_repo       = local.github.repo
+  github_token      = local.github.token
 }

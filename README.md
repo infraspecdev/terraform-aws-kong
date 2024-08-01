@@ -87,7 +87,6 @@ This command will display the values of the stored parameters, ensuring they hav
 |------|--------|---------|
 | <a name="module_ecs_exec_role"></a> [ecs\_exec\_role](#module\_ecs\_exec\_role) | ./modules/iam | n/a |
 | <a name="module_ecs_kong"></a> [ecs\_kong](#module\_ecs\_kong) | infraspecdev/ecs-deployment/aws | ~> 2.0.0 |
-| <a name="module_ecs_node_security_group"></a> [ecs\_node\_security\_group](#module\_ecs\_node\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.1.2 |
 | <a name="module_ecs_task_security_group"></a> [ecs\_task\_security\_group](#module\_ecs\_task\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.1.2 |
 | <a name="module_github_runner"></a> [github\_runner](#module\_github\_runner) | ./modules/github-runner | n/a |
 | <a name="module_internal_alb_kong"></a> [internal\_alb\_kong](#module\_internal\_alb\_kong) | infraspecdev/ecs-deployment/aws//modules/alb | ~> 2.0.0 |
@@ -103,7 +102,6 @@ This command will display the values of the stored parameters, ensuring they hav
 | Name | Type |
 |------|------|
 | [aws_autoscaling_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/autoscaling_group) | data source |
-| [aws_ssm_parameter.ecs_node_ami](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
 | [aws_ssm_parameter.github](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
 | [aws_ssm_parameter.rds](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
 | [aws_vpc.vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
