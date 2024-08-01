@@ -40,6 +40,7 @@ module "postgres_security_group" {
     protocol    = "-1"
     cidr_blocks = "0.0.0.0/0"
   }, ]
+
   tags = local.default_tags
 }
 
@@ -107,6 +108,7 @@ module "internal_alb_security_group" {
     protocol    = "-1"
     cidr_blocks = "0.0.0.0/0"
   }, ]
+
   tags = local.default_tags
 }
 
@@ -136,6 +138,7 @@ module "public_alb_security_group" {
     protocol    = "-1"
     cidr_blocks = "0.0.0.0/0"
   }, ]
+
   tags = local.default_tags
 }
 
@@ -164,6 +167,7 @@ module "ecs_task_security_group" {
     protocol    = "-1"
     cidr_blocks = "0.0.0.0/0"
   }, ]
+
   tags = local.default_tags
 }
 
@@ -172,7 +176,8 @@ module "ecs_task_security_group" {
 ################################################################################
 
 module "ecs_exec_role" {
-  source                = "./modules/iam"
+  source = "./modules/iam"
+
   name_prefix           = local.ecs.iam.name_prefix
   principal_type        = local.ecs.iam.principal_type
   principal_identifiers = local.ecs.iam.principal_identifiers
@@ -198,6 +203,7 @@ module "ecs_kong" {
     name                 = local.kong.service_name
     desired_count        = var.desired_count_for_kong_service
     force_new_deployment = var.force_new_deployment
+
     load_balancer = [
       {
         target_group_arn = module.internal_alb_kong.target_groups_arns[local.kong.internal_target_group]
@@ -210,6 +216,7 @@ module "ecs_kong" {
         container_port = local.kong.proxy_port
       }
     ]
+
     network_configuration = {
       subnets          = var.private_subnet_ids
       security_groups  = [module.ecs_task_security_group.security_group_id]
@@ -271,6 +278,7 @@ module "ecs_kong" {
     subnets_ids                = var.public_subnet_ids
     security_groups_ids        = [module.public_alb_security_group.security_group_id]
     enable_deletion_protection = false
+
     target_groups = {
       (local.kong.public_target_group) = {
         name        = "${local.kong.name}-public"
@@ -289,6 +297,7 @@ module "ecs_kong" {
         }
       }
     }
+
     listeners = {
       kong_https = {
         port            = 443
@@ -328,6 +337,7 @@ module "internal_alb_kong" {
   subnets_ids                = var.private_subnet_ids
   security_groups_ids        = [module.internal_alb_security_group.security_group_id]
   enable_deletion_protection = false
+
   target_groups = {
     (local.kong.internal_target_group) = {
       name        = "${local.kong.name}-internal"
@@ -347,6 +357,7 @@ module "internal_alb_kong" {
       }
     }
   }
+
   listeners = {
     kong_http = {
       port     = 80
@@ -399,7 +410,8 @@ module "kong_internal_dns_record" {
 ################################################################################
 
 module "github_runner" {
-  source            = "./modules/github-runner"
+  source = "./modules/github-runner"
+
   vpc_id            = var.vpc_id
   private_subnet_id = var.private_subnet_ids[0]
   github_org        = local.github.org
