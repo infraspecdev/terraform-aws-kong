@@ -115,7 +115,7 @@ variable "kong_public_domain_name" {
 }
 
 variable "kong_admin_domain_name" {
-  description = "Kong public domain name"
+  description = "Kong admin domain name"
   type        = string
 }
 
