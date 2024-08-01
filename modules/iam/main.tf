@@ -1,3 +1,15 @@
+data "aws_iam_policy_document" "assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    effect  = "Allow"
+
+    principals {
+      type        = var.principal_type
+      identifiers = var.principal_identifiers
+    }
+  }
+}
+
 resource "aws_iam_role" "this" {
   name_prefix        = var.name_prefix
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
