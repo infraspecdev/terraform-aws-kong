@@ -13,11 +13,6 @@ locals {
   }
 
   ecs = {
-    user_data        = <<EOF
-    #!/bin/bash
-    echo ECS_CLUSTER=${var.cluster_name} >> /etc/ecs/ecs.config;
-    EOF
-    ecs_node_sg_name = "kong"
     iam = {
       name_prefix           = "kong-ecs-exec"
       ecs_exec_policy_arn   = ["arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"]
@@ -31,18 +26,9 @@ locals {
     service_name           = "kong"
     task_definition_family = "kong"
     network_mode           = "awsvpc"
-    launch_template_name   = "kong"
-    image_id               = data.aws_ssm_parameter.ecs_node_ami.value
-    iam_role_policy_attachments = [
-      "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy",
-      "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
-      "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
-    ]
-
-    alb_sg_name      = "kong"
-    ecs_task_sg_name = "kong"
-    commands         = ["/bin/sh", "-c", "kong migrations bootstrap && ulimit -n 4096 && kong start"]
-
+    alb_sg_name            = "kong"
+    ecs_task_sg_name       = "kong"
+    commands               = ["/bin/sh", "-c", "kong migrations bootstrap && ulimit -n 4096 && kong start"]
     portMappings = [
       { containerPort = 80, hostPort = 80 },
       { containerPort = 8000, hostPort = 8000 },
@@ -50,8 +36,6 @@ locals {
       { containerPort = 8001, hostPort = 8001 },
       { containerPort = 8002, hostPort = 8002 }
     ]
-
-
     admin_port            = 8001
     proxy_port            = 8000
     public_target_group   = "kong_public"

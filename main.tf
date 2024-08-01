@@ -69,32 +69,6 @@ module "kong_rds" {
 }
 
 ################################################################################
-# ECS Node Security Group
-################################################################################
-
-module "ecs_node_security_group" {
-  source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 5.1.2"
-
-  name   = local.ecs.ecs_node_sg_name
-  vpc_id = var.vpc_id
-
-  ingress_with_cidr_blocks = [{
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = data.aws_vpc.vpc.cidr_block
-  }]
-  egress_with_cidr_blocks = [{
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = "0.0.0.0/0"
-  }, ]
-  tags = local.default_tags
-}
-
-################################################################################
 # Internal ALB Security Group
 ################################################################################
 
