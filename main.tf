@@ -23,13 +23,13 @@ module "postgres_security_group" {
   version = "~> 5.1.2"
 
   name        = local.rds.sg_name
-  description = "Allow all traffic within vpc"
+  description = local.rds.sg_description
   vpc_id      = var.vpc_id
 
   ingress_with_cidr_blocks = [
     {
       from_port   = 0
-      to_port     = 5432
+      to_port     = local.rds.port
       protocol    = "tcp"
       cidr_blocks = data.aws_vpc.vpc.cidr_block
     },
@@ -345,6 +345,7 @@ module "internal_alb_kong" {
       protocol    = "HTTP"
       target_type = "ip"
       vpc_id      = var.vpc_id
+
       health_check = {
         enabled             = true
         path                = "/status"
@@ -386,8 +387,7 @@ module "internal_alb_kong" {
 module "kong_public_dns_record" {
   source = "./modules/route-53-record"
 
-  base_domain  = var.base_domain
-  endpoints    = var.kong_public_sub_domain_names
+  domain       = "kong.gaussb.io"
   alb_dns_name = module.ecs_kong.alb_dns_name
   alb_zone_id  = module.ecs_kong.alb_zone_id
 }
@@ -399,8 +399,7 @@ module "kong_public_dns_record" {
 module "kong_internal_dns_record" {
   source = "./modules/route-53-record"
 
-  base_domain  = var.base_domain
-  endpoints    = var.kong_admin_sub_domain_names
+  domain       = "admin.gaussb.io"
   alb_dns_name = module.internal_alb_kong.dns_name
   alb_zone_id  = module.ecs_kong.alb_zone_id
 }

@@ -24,6 +24,7 @@ locals {
     major_engine_version = 16
     port                 = 5432
     sg_name              = "kong-postgres"
+    sg_description       = "Allow all traffic within vpc"
     postgres_username    = data.aws_ssm_parameter.rds["POSTGRES_USERNAME"].value
     postgres_password    = data.aws_ssm_parameter.rds["POSTGRES_PASSWORD"].value
     postgres_db_name     = data.aws_ssm_parameter.rds["POSTGRES_DB_NAME"].value
