@@ -109,19 +109,14 @@ variable "ssl_policy" {
   default     = "ELBSecurityPolicy-2016-08"
 }
 
-variable "kong_public_sub_domain_names" {
-  description = "List of kong public sub domain names"
-  type        = list(any)
-}
-
-variable "kong_admin_sub_domain_names" {
-  description = "List of kong admin sub domain names"
-  type        = list(any)
-}
-
-variable "base_domain" {
+variable "kong_public_domain_name" {
+  description = "Kong public domain name"
   type        = string
-  description = "Base domain"
+}
+
+variable "kong_admin_domain_name" {
+  description = "Kong public domain name"
+  type        = string
 }
 
 variable "maximum_scaling_step_size" {

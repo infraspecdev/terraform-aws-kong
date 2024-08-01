@@ -50,9 +50,6 @@ locals {
 
     public_target_group   = "kong_public"
     internal_target_group = "kong_internal"
-    public_domains        = [for subdomain in var.kong_public_sub_domain_names : "${subdomain}.${var.base_domain}"]
-    admin_domains         = [for subdomain in var.kong_admin_sub_domain_names : "${subdomain}.${var.base_domain}"]
-
 
     admin_port = 8001
     proxy_port = 8000

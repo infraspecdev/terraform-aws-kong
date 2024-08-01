@@ -312,7 +312,7 @@ module "ecs_kong" {
             conditions = [
               {
                 field  = "host-header"
-                values = local.kong.public_domains
+                values = var.kong_public_domain_name
               }
             ]
           },
@@ -371,7 +371,7 @@ module "internal_alb_kong" {
           conditions = [
             {
               field  = "host-header"
-              values = local.kong.admin_domains
+              values = var.kong_admin_domain_name
             }
           ]
         },
@@ -387,7 +387,7 @@ module "internal_alb_kong" {
 module "kong_public_dns_record" {
   source = "./modules/route-53-record"
 
-  domain       = "kong.gaussb.io"
+  domain       = var.kong_public_domain_name
   alb_dns_name = module.ecs_kong.alb_dns_name
   alb_zone_id  = module.ecs_kong.alb_zone_id
 }
@@ -399,7 +399,7 @@ module "kong_public_dns_record" {
 module "kong_internal_dns_record" {
   source = "./modules/route-53-record"
 
-  domain       = "admin.gaussb.io"
+  domain       = var.kong_admin_domain_name
   alb_dns_name = module.internal_alb_kong.dns_name
   alb_zone_id  = module.ecs_kong.alb_zone_id
 }

@@ -113,7 +113,6 @@ This command will display the values of the stored parameters, ensuring they hav
 | <a name="input_asg_name"></a> [asg\_name](#input\_asg\_name) | Name of the auto scaling group | `string` | `"default"` | no |
 | <a name="input_backup_retention_period"></a> [backup\_retention\_period](#input\_backup\_retention\_period) | The number of days to retain backups | `number` | `1` | no |
 | <a name="input_backup_window"></a> [backup\_window](#input\_backup\_window) | The daily time range (in UTC) during which automated backups are created if they are enabled | `string` | `null` | no |
-| <a name="input_base_domain"></a> [base\_domain](#input\_base\_domain) | Base domain | `string` | n/a | yes |
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name of the cluster | `string` | `"default"` | no |
 | <a name="input_container_image"></a> [container\_image](#input\_container\_image) | Container image for kong | `string` | `"kong:3.7.1-ubuntu"` | no |
 | <a name="input_cpu_for_kong_task"></a> [cpu\_for\_kong\_task](#input\_cpu\_for\_kong\_task) | CPU required for kong task definiton | `number` | `256` | no |
@@ -123,8 +122,8 @@ This command will display the values of the stored parameters, ensuring they hav
 | <a name="input_deletion_protection"></a> [deletion\_protection](#input\_deletion\_protection) | Whether to enable deletion protection | `bool` | `false` | no |
 | <a name="input_desired_count_for_kong_service"></a> [desired\_count\_for\_kong\_service](#input\_desired\_count\_for\_kong\_service) | Desired count for kong service | `number` | `1` | no |
 | <a name="input_force_new_deployment"></a> [force\_new\_deployment](#input\_force\_new\_deployment) | Whether to force new deployment | `bool` | `true` | no |
-| <a name="input_kong_admin_sub_domain_names"></a> [kong\_admin\_sub\_domain\_names](#input\_kong\_admin\_sub\_domain\_names) | List of kong admin sub domain names | `list(any)` | n/a | yes |
-| <a name="input_kong_public_sub_domain_names"></a> [kong\_public\_sub\_domain\_names](#input\_kong\_public\_sub\_domain\_names) | List of kong public sub domain names | `list(any)` | n/a | yes |
+| <a name="input_kong_admin_domain_name"></a> [kong\_admin\_domain\_name](#input\_kong\_admin\_domain\_name) | Kong public domain name | `string` | n/a | yes |
+| <a name="input_kong_public_domain_name"></a> [kong\_public\_domain\_name](#input\_kong\_public\_domain\_name) | Kong public domain name | `string` | n/a | yes |
 | <a name="input_log_configuration_for_kong"></a> [log\_configuration\_for\_kong](#input\_log\_configuration\_for\_kong) | Log configuration for kong | `any` | `null` | no |
 | <a name="input_maintenance_window"></a> [maintenance\_window](#input\_maintenance\_window) | The window to perform maintenance in.Syntax:ddd:hh24:mi-ddd:hh24:mi | `string` | `null` | no |
 | <a name="input_manage_master_user_password"></a> [manage\_master\_user\_password](#input\_manage\_master\_user\_password) | Whether to manage master user password | `bool` | `false` | no |
