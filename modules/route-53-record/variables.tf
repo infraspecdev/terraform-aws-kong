@@ -1,11 +1,6 @@
-variable "base_domain" {
-  description = "The base domain for the Route 53 zone"
+variable "domain" {
+  description = "Domain name"
   type        = string
-}
-
-variable "endpoints" {
-  description = "A list of endpoints for which to create Route 53 records"
-  type        = list(string)
 }
 
 variable "alb_dns_name" {

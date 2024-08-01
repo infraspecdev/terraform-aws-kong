@@ -1,6 +1,6 @@
 output "certificate_arn" {
   description = "ARN of the base domain certificate"
-  value       = data.aws_acm_certificate.base_domain_certificate.arn
+  value       = data.aws_acm_certificate.domain.arn
 }
 
 output "zone_id" {
