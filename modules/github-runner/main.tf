@@ -1,3 +1,9 @@
+locals {
+  security_group_name_prefix = "github-runner-sg"
+  ubuntu_instance_name       = "github-runner"
+  instance_type              = "t2.micro"
+}
+
 resource "aws_instance" "github_runner" {
   ami                    = var.ami_id
   instance_type          = local.instance_type
