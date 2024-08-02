@@ -11,7 +11,7 @@
         - name: Checkout template repository
           uses: actions/checkout@v3
           with:
-            repository: nimisha-gj/terraform-module-template
+            repository: infraspecdev/terraform-module-template
             token: ${{ secrets.GITHUB_TOKEN }}
             path: template-repo
 
