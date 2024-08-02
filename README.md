@@ -1,3 +1,4 @@
+<!-- BEGIN_TF_DOCS -->
 # Architectural Diagram
 
 ![Kong](https://github.com/user-attachments/assets/3dda9db7-cf8e-4cd2-a507-4e50f9252ffe)
@@ -66,12 +67,13 @@ This command will display the values of the stored parameters, ensuring they hav
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.8.4 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.60.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.5.0 |
 
 ## Modules
 
@@ -129,3 +131,4 @@ This command will display the values of the stored parameters, ensuring they hav
 ## Outputs
 
 No outputs.
+<!-- END_TF_DOCS -->
