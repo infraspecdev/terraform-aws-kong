@@ -8,12 +8,6 @@ data "aws_ssm_parameter" "rds" {
   with_decryption = true
 }
 
-data "aws_ssm_parameter" "github" {
-  for_each        = toset(local.ssm_parameters.github)
-  name            = "/github-action/${each.value}"
-  with_decryption = true
-}
-
 ################################################################################
 # Postgres Security Group
 ################################################################################
@@ -383,18 +377,4 @@ module "kong_internal_dns_record" {
   domain       = var.kong_admin_domain_name
   alb_dns_name = module.internal_alb_kong.dns_name
   alb_zone_id  = module.ecs_kong.alb_zone_id
-}
-
-################################################################################
-# Self-hosted Github Runner
-################################################################################
-
-module "github_runner" {
-  source = "./modules/github-runner"
-
-  vpc_id            = var.vpc_id
-  private_subnet_id = var.private_subnet_ids[0]
-  github_org        = local.github.org
-  github_repo       = local.github.repo
-  github_token      = local.github.token
 }

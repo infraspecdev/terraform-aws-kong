@@ -6,11 +6,6 @@ locals {
       "POSTGRES_PASSWORD",
       "POSTGRES_DB_NAME"
     ]
-    github = [
-      "GITHUB_ORG",
-      "GITHUB_REPO",
-      "GITHUB_TOKEN"
-    ]
   }
 
   rds = {
@@ -74,12 +69,6 @@ locals {
       "KONG_LOG_LEVEL"        = "debug"
       "KONG_PG_SSL"           = "on"
     }
-  }
-
-  github = {
-    org   = data.aws_ssm_parameter.github["GITHUB_ORG"].value
-    repo  = data.aws_ssm_parameter.github["GITHUB_REPO"].value
-    token = data.aws_ssm_parameter.github["GITHUB_TOKEN"].value
   }
 
   default_tags = {
