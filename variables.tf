@@ -43,18 +43,6 @@ variable "backup_retention_period" {
   default     = 1
 }
 
-variable "cluster_name" {
-  description = "Name of the cluster"
-  type        = string
-  default     = "default"
-}
-
-variable "asg_name" {
-  description = "Name of the auto scaling group"
-  type        = string
-  default     = "default"
-}
-
 variable "deletion_protection" {
   description = "Whether to enable deletion protection"
   type        = bool
@@ -117,30 +105,6 @@ variable "kong_public_domain_name" {
 variable "kong_admin_domain_name" {
   description = "Kong admin domain name"
   type        = string
-}
-
-variable "maximum_scaling_step_size" {
-  description = "Maximum scaling step size"
-  type        = number
-  default     = 2
-}
-
-variable "minimum_scaling_step_size" {
-  description = "Minimum scaling step size"
-  type        = number
-  default     = 1
-}
-
-variable "managed_scaling_status" {
-  description = "Mangaed scaling"
-  type        = string
-  default     = "ENABLED"
-}
-
-variable "target_capacity" {
-  description = "Target Capacity for managed scaling"
-  type        = number
-  default     = 100
 }
 
 variable "container_image" {

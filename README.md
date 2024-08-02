@@ -79,7 +79,7 @@ This command will display the values of the stored parameters, ensuring they hav
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.59.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.60.0 |
 
 ## Modules
 
@@ -101,7 +101,7 @@ This command will display the values of the stored parameters, ensuring they hav
 
 | Name | Type |
 |------|------|
-| [aws_autoscaling_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/autoscaling_group) | data source |
+| [aws_ecs_cluster.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ecs_cluster) | data source |
 | [aws_ssm_parameter.github](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
 | [aws_ssm_parameter.rds](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
 | [aws_vpc.vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
@@ -110,10 +110,8 @@ This command will display the values of the stored parameters, ensuring they hav
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_asg_name"></a> [asg\_name](#input\_asg\_name) | Name of the auto scaling group | `string` | `"default"` | no |
 | <a name="input_backup_retention_period"></a> [backup\_retention\_period](#input\_backup\_retention\_period) | The number of days to retain backups | `number` | `1` | no |
 | <a name="input_backup_window"></a> [backup\_window](#input\_backup\_window) | The daily time range (in UTC) during which automated backups are created if they are enabled | `string` | `null` | no |
-| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name of the cluster | `string` | `"default"` | no |
 | <a name="input_container_image"></a> [container\_image](#input\_container\_image) | Container image for kong | `string` | `"kong:3.7.1-ubuntu"` | no |
 | <a name="input_cpu_for_kong_task"></a> [cpu\_for\_kong\_task](#input\_cpu\_for\_kong\_task) | CPU required for kong task definiton | `number` | `256` | no |
 | <a name="input_create_db_subnet_group"></a> [create\_db\_subnet\_group](#input\_create\_db\_subnet\_group) | Whether to create a DB subnet group | `bool` | `true` | no |
@@ -127,10 +125,7 @@ This command will display the values of the stored parameters, ensuring they hav
 | <a name="input_log_configuration_for_kong"></a> [log\_configuration\_for\_kong](#input\_log\_configuration\_for\_kong) | Log configuration for kong | `any` | `null` | no |
 | <a name="input_maintenance_window"></a> [maintenance\_window](#input\_maintenance\_window) | The window to perform maintenance in.Syntax:ddd:hh24:mi-ddd:hh24:mi | `string` | `null` | no |
 | <a name="input_manage_master_user_password"></a> [manage\_master\_user\_password](#input\_manage\_master\_user\_password) | Whether to manage master user password | `bool` | `false` | no |
-| <a name="input_managed_scaling_status"></a> [managed\_scaling\_status](#input\_managed\_scaling\_status) | Mangaed scaling | `string` | `"ENABLED"` | no |
-| <a name="input_maximum_scaling_step_size"></a> [maximum\_scaling\_step\_size](#input\_maximum\_scaling\_step\_size) | Maximum scaling step size | `number` | `2` | no |
 | <a name="input_memory_for_kong_task"></a> [memory\_for\_kong\_task](#input\_memory\_for\_kong\_task) | Memory required for kong task definiton | `number` | `256` | no |
-| <a name="input_minimum_scaling_step_size"></a> [minimum\_scaling\_step\_size](#input\_minimum\_scaling\_step\_size) | Minimum scaling step size | `number` | `1` | no |
 | <a name="input_multi_az"></a> [multi\_az](#input\_multi\_az) | Specifies if the RDS instance is multi-AZ | `bool` | `false` | no |
 | <a name="input_performance_insights_enabled"></a> [performance\_insights\_enabled](#input\_performance\_insights\_enabled) | Whether to enable performance insights | `bool` | `true` | no |
 | <a name="input_performance_insights_retention_period"></a> [performance\_insights\_retention\_period](#input\_performance\_insights\_retention\_period) | The retention period for performance insights | `number` | `7` | no |
@@ -139,7 +134,6 @@ This command will display the values of the stored parameters, ensuring they hav
 | <a name="input_rds_db_tags"></a> [rds\_db\_tags](#input\_rds\_db\_tags) | List of tags | `map(string)` | `{}` | no |
 | <a name="input_rds_instance_class"></a> [rds\_instance\_class](#input\_rds\_instance\_class) | The instance class to use | `string` | `"db.t3.micro"` | no |
 | <a name="input_ssl_policy"></a> [ssl\_policy](#input\_ssl\_policy) | (Optional) Name of the SSL Policy for the listener. | `string` | `"ELBSecurityPolicy-2016-08"` | no |
-| <a name="input_target_capacity"></a> [target\_capacity](#input\_target\_capacity) | Target Capacity for managed scaling | `number` | `100` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The ID of the VPC | `string` | n/a | yes |
 
 ## Outputs

@@ -188,8 +188,8 @@ module "ecs_exec_role" {
 # ECS Kong
 ################################################################################
 
-data "aws_autoscaling_group" "this" {
-  name = var.asg_name
+data "aws_ecs_cluster" "default" {
+  cluster_name = "default"
 }
 
 module "ecs_kong" {
@@ -197,7 +197,7 @@ module "ecs_kong" {
   version = "~> 2.0.0"
 
   vpc_id       = var.vpc_id
-  cluster_name = var.cluster_name
+  cluster_name = data.aws_ecs_cluster.default.cluster_name
 
   service = {
     name                 = local.kong.service_name
@@ -251,26 +251,7 @@ module "ecs_kong" {
     ]
   }
 
-  capacity_provider_default_auto_scaling_group_arn = data.aws_autoscaling_group.this.arn
-  capacity_providers = {
-    kong = {
-      name                           = local.kong.name
-      managed_termination_protection = "DISABLED"
-      managed_scaling = {
-        maximum_scaling_step_size = var.maximum_scaling_step_size
-        minimum_scaling_step_size = var.minimum_scaling_step_size
-        status                    = var.managed_scaling_status
-        target_capacity           = var.target_capacity
-      }
-    }
-  }
-  default_capacity_providers_strategies = [
-    {
-      capacity_provider = local.kong.name
-      base              = 0
-      weight            = 1
-    }
-  ]
+  create_capacity_provider = false
 
   load_balancer = {
     name                       = "${local.kong.name}-public"

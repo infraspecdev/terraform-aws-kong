@@ -6,7 +6,7 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.53.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.60.0 |
 
 ## Modules
 
@@ -18,6 +18,7 @@ No modules.
 |------|------|
 | [aws_instance.github_runner](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) | resource |
 | [aws_security_group.github_runner](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
+| [aws_vpc.vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
 
 ## Inputs
 
