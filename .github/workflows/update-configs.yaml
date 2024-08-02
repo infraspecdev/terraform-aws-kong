@@ -1,0 +1,45 @@
+    name: Update Configuration from Template
+
+    on:
+      workflow_dispatch:
+
+    jobs:
+      update:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout template repository
+          uses: actions/checkout@v3
+          with:
+            repository: nimisha-gj/terraform-module-template
+            token: ${{ secrets.GITHUB_TOKEN }}
+            path: template-repo
+
+        - name: Checkout target repository
+          uses: actions/checkout@v3
+          with:
+            repository: ${{ github.repository }}
+            token: ${{ secrets.GITHUB_TOKEN }}
+            path: target-repo
+
+        - name: Set up Git
+          run: |
+            git config --global user.name "github-actions"
+            git config --global user.email "github-actions@github.com"
+
+        - name: Copy files from template repository
+          run: |
+            cp template-repo/.editorconfig target-repo/
+            cp template-repo/.pre-commit-config.yaml target-repo/
+            cp template-repo/LICENSE target-repo/
+            cp template-repo/.tflint.hcl target-repo/
+            cp template-repo/.releaserc.json target-repo/
+            cp template-repo/CODE_OF_CONDUCT.md target-repo/
+            cp template-repo/CONTRIBUTING.md target-repo/
+
+        - name: Commit and push changes
+          run: |
+            cd target-repo
+            git add .
+            git commit -m "Update files from terraform-module-template"
+            git push

@@ -1,9 +1,7 @@
 name: 'Module Release'
 
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
 
 defaults:
   run:
@@ -15,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-          fetch-depth: 0
+        uses: actions/checkout@v4
+
+      - name: Git pull
+        run: git pull origin main
 
       - name: Release
         uses: cycjimmy/semantic-release-action@v2

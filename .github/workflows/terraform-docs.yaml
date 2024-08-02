@@ -1,0 +1,77 @@
+name: Terraform Docs
+
+on:
+  workflow_call:
+
+env:
+  TERRAFORM_DOCS_VERSION: v0.18.0
+
+jobs:
+  generateDocs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Render and Push terraform docs for main module
+        uses: terraform-docs/gh-actions@main
+        with:
+          working-dir: .
+          git-push: true
+          output-file: README.md
+          output-format: markdown table
+          output-method: replace
+          recursive: false
+          template: |
+            <!-- BEGIN_TF_DOCS -->
+            {{ .Content }}
+            <!-- END_TF_DOCS -->
+            {{- printf "\n" -}}
+          args: "--header-from .header.md"
+
+      - name: Check if modules folder exists
+        id: check_modules
+        run: echo "modules_exists=$(if [ -d modules ]; then echo true; else echo false; fi)" >> $GITHUB_ENV
+
+      - name: Render and Push terraform docs for sub modules
+        if: env.modules_exists == 'true'
+        uses: terraform-docs/gh-actions@main
+        with:
+          working-dir: .
+          git-push: true
+          output-file: README.md
+          output-format: markdown table
+          output-method: replace
+          recursive: true
+          recursive-path: modules
+          template: |
+            <!-- BEGIN_TF_DOCS -->
+            {{ .Content }}
+            <!-- END_TF_DOCS -->
+            {{- printf "\n" -}}
+          args: "--header-from .header.md"
+
+
+      - name: Check if examples folder exists
+        id: check_examples
+        run: echo "examples_exists=$(if [ -d examples ]; then echo true; else echo false; fi)" >> $GITHUB_ENV
+
+      - name: Render and Push terraform docs for examples
+        if: env.examples_exists == 'true'
+        uses: terraform-docs/gh-actions@main
+        with:
+          working-dir: .
+          git-push: true
+          output-file: README.md
+          output-format: markdown table
+          output-method: replace
+          recursive: true
+          recursive-path: examples
+          template: |
+            <!-- BEGIN_TF_DOCS -->
+            {{ .Content }}
+            <!-- END_TF_DOCS -->
+            {{- printf "\n" -}}
+          args: "--header-from .header.md"

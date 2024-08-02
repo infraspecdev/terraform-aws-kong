@@ -1,0 +1,36 @@
+name: Terraform Master Workflow
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+  pull_request:
+    branches:
+      - main
+      - master
+jobs:
+  prTitlecheck:
+    name: PR title check
+    if: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'main' }}
+    uses: ./.github/workflows/pr-title.yaml
+
+  preCommitCheck:
+    name: Terraform Checks
+    uses: ./.github/workflows/terraform-checks.yaml
+
+  generateDocs:
+    name: Generate Terraform Docs
+    needs: preCommitCheck
+    uses: ./.github/workflows/terraform-docs.yaml
+
+  release:
+    name: Release module
+    needs: generateDocs
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/release.yaml
