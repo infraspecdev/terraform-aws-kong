@@ -1,12 +1,16 @@
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.8.4 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.60.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.5.0 |
 
 ## Modules
 
@@ -34,3 +38,4 @@ No modules.
 |------|-------------|
 | <a name="output_certificate_arn"></a> [certificate\_arn](#output\_certificate\_arn) | ARN of the base domain certificate |
 | <a name="output_zone_id"></a> [zone\_id](#output\_zone\_id) | ID of the Route 53 zone |
+<!-- END_TF_DOCS -->

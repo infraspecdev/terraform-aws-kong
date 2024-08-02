@@ -1,12 +1,16 @@
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.8.4 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.60.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.5.0 |
 
 ## Modules
 
@@ -35,3 +39,4 @@ No modules.
 |------|-------------|
 | <a name="output_role_arn"></a> [role\_arn](#output\_role\_arn) | The ARN of the IAM role |
 | <a name="output_role_name"></a> [role\_name](#output\_role\_name) | The name of the IAM role |
+<!-- END_TF_DOCS -->
