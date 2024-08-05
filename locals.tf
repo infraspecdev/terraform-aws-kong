@@ -43,8 +43,9 @@ locals {
     ecs_task_sg_name       = "kong"
     commands               = ["/bin/sh", "-c", "kong migrations bootstrap && ulimit -n 4096 && kong start"]
 
-    public_target_group   = "kong_public"
-    internal_target_group = "kong_internal"
+    public_target_group    = "kong_public"
+    internal_target_group  = "kong_internal"
+    public_acm_certificate = "kong_public"
 
     admin_port = 8001
     proxy_port = 8000
