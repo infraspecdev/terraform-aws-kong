@@ -1,4 +1,23 @@
 <!-- BEGIN_TF_DOCS -->
+# AWS Route53 Setup for Domain
+
+This Terraform module sets up an AWS Route53 record for a given domain and retrieves the most recent AWS ACM certificate for the base domain. It uses an existing Application Load Balancer (ALB) to create an alias record in Route53.
+
+## Assumptions
+
+- You have a domain managed by AWS Route53.
+- You have an existing ALB with a DNS name and zone ID.
+- The ACM certificate for your domain is already issued and available in your AWS account.
+
+## Prerequisites
+
+1. **Terraform:** Make sure you have Terraform installed. Refer to the [Terraform installation guide](https://learn.hashicorp.com/tutorials/terraform/install-cli) if needed.
+2. **AWS Credentials:** Ensure your AWS credentials are configured. You can do this by setting environment variables or using the AWS credentials file.
+3. **Existing Resources:** The following resources must already exist:
+   - An AWS Route53 hosted zone for your domain.
+   - An AWS ACM certificate for your domain that is in the `ISSUED` state.
+   - An ALB with a DNS name and zone ID.
+
 ## Requirements
 
 | Name | Version |
