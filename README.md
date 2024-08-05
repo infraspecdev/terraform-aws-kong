@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
 # Architectural Diagram
 
-![Kong](https://github.com/user-attachments/assets/3dda9db7-cf8e-4cd2-a507-4e50f9252ffe)
+![Kong](./diagrams/kong-architecture.png)
 
 # Assumptions
 
