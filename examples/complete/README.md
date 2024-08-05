@@ -1,4 +1,50 @@
 <!-- BEGIN_TF_DOCS -->
+### Example Variable Values
+
+Here is an example of how to define the variable values in your `terraform.tfvars` file:
+
+```hcl
+vpc_id                  = "vpc-12345678"
+public_subnet_ids       = ["subnet-abcdef01", "subnet-abcdef02"]
+private_subnet_ids      = ["subnet-abcdef03", "subnet-abcdef04"]
+kong_public_domain_name = "api.example.com"
+kong_admin_domain_name  = "admin-api.example.com"
+
+rds_instance_class                    = "db.t3.medium"
+db_max_allocated_storage              = 100
+manage_master_user_password           = true
+backup_retention_period               = 7
+deletion_protection                   = true
+create_db_subnet_group                = true
+performance_insights_enabled          = true
+performance_insights_retention_period = 7
+rds_db_tags                           = {
+  Environment = "production"
+  Team        = "devops"
+}
+multi_az                              = true
+backup_window                         = "07:00-09:00"
+maintenance_window                    = "Mon:00:00-Mon:03:00"
+
+cluster_name                   = "default"
+ssl_policy                     = "ELBSecurityPolicy-2016-08"
+container_image                = "kong:2.5"
+log_configuration_for_kong     = {
+  log_driver = "awslogs"
+  options    = {
+    "awslogs-group"         = "/ecs/kong"
+    "awslogs-region"        = "ap-south-1"
+    "awslogs-stream-prefix" = "kong"
+  }
+}
+cpu_for_kong_task              = 512
+memory_for_kong_task           = 1024
+desired_count_for_kong_service = 2
+force_new_deployment           = true
+```
+
+Place this `terraform.tfvars` file in the same directory as your Terraform configuration to automatically load these values. Adjust the values as needed to fit your specific environment and requirements.
+
 ## Requirements
 
 | Name | Version |
