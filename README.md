@@ -79,7 +79,7 @@ This command will display the values of the stored parameters, ensuring they hav
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ecs_kong"></a> [ecs\_kong](#module\_ecs\_kong) | infraspecdev/ecs-deployment/aws | ~> 2.0.0 |
+| <a name="module_ecs_kong"></a> [ecs\_kong](#module\_ecs\_kong) | infraspecdev/ecs-deployment/aws | ~> 4.0.4 |
 | <a name="module_ecs_task_security_group"></a> [ecs\_task\_security\_group](#module\_ecs\_task\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.1.2 |
 | <a name="module_internal_alb_kong"></a> [internal\_alb\_kong](#module\_internal\_alb\_kong) | infraspecdev/ecs-deployment/aws//modules/alb | ~> 2.0.0 |
 | <a name="module_internal_alb_security_group"></a> [internal\_alb\_security\_group](#module\_internal\_alb\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.1.2 |
