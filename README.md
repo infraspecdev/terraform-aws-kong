@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
 # Architectural Diagram
 
-![Kong](./diagrams/kong-architecture.png)
+![Kong](https://github.com/infraspecdev/terraform-aws-kong/raw/main/diagrams/kong-architecture.png)
 
 # Assumptions
 
