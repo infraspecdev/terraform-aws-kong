@@ -197,7 +197,7 @@ resource "aws_iam_role_policy_attachment" "ecs_exec" {
 ################################################################################
 
 data "aws_ecs_cluster" "default" {
-  cluster_name = "default"
+  cluster_name = var.cluster_name
 }
 
 module "ecs_kong" {

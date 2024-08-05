@@ -20,6 +20,7 @@ module "kong" {
   backup_window                         = var.backup_window
   maintenance_window                    = var.maintenance_window
 
+  cluster_name                   = var.cluster_name
   ssl_policy                     = var.ssl_policy
   container_image                = var.container_image
   log_configuration_for_kong     = var.log_configuration_for_kong

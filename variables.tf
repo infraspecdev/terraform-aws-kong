@@ -91,9 +91,15 @@ variable "maintenance_window" {
   default     = null
 }
 
+variable "cluster_name" {
+  description = "Name of the cluster"
+  type        = string
+  default     = "default"
+}
+
 variable "ssl_policy" {
   type        = string
-  description = "(Optional) Name of the SSL Policy for the listener."
+  description = "Name of the SSL Policy for the listener."
   default     = "ELBSecurityPolicy-2016-08"
 }
 
