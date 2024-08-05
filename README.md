@@ -132,5 +132,10 @@ This command will display the values of the stored parameters, ensuring they hav
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_ecs_service_arn"></a> [ecs\_service\_arn](#output\_ecs\_service\_arn) | ARN of kong ECS service |
+| <a name="output_internal_alb_dns"></a> [internal\_alb\_dns](#output\_internal\_alb\_dns) | DNS name of internal ALB |
+| <a name="output_public_alb_dns"></a> [public\_alb\_dns](#output\_public\_alb\_dns) | DNS name of public ALB |
+| <a name="output_rds_instance_endpoint"></a> [rds\_instance\_endpoint](#output\_rds\_instance\_endpoint) | Endpoint of RDS instance |
 <!-- END_TF_DOCS -->
