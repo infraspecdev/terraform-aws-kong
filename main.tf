@@ -202,7 +202,7 @@ data "aws_ecs_cluster" "default" {
 
 module "ecs_kong" {
   source  = "infraspecdev/ecs-deployment/aws"
-  version = "~> 2.0.0"
+  version = "~> 4.0.4"
 
   vpc_id       = var.vpc_id
   cluster_name = data.aws_ecs_cluster.default.cluster_name
@@ -257,6 +257,7 @@ module "ecs_kong" {
         logConfiguration = var.log_configuration_for_kong
       }
     ]
+    volume = []
   }
 
   create_capacity_provider = false
@@ -289,10 +290,10 @@ module "ecs_kong" {
 
     listeners = {
       kong_https = {
-        port            = 443
-        protocol        = "HTTPS"
-        certificate_arn = module.kong_public_dns_record.certificate_arn
-        ssl_policy      = var.ssl_policy
+        port        = 443
+        protocol    = "HTTPS"
+        certificate = local.kong.public_acm_certificate
+        ssl_policy  = var.ssl_policy
 
         default_action = [
           {
@@ -307,6 +308,18 @@ module "ecs_kong" {
           },
         ]
       }
+    }
+  }
+
+  create_acm = true
+  acm_certificates = {
+    (local.kong.public_acm_certificate) = {
+      domain_name = var.kong_public_domain_name
+      validation_option = {
+        domain_name       = var.kong_public_domain_name
+        validation_domain = var.kong_public_domain_name
+      }
+      record_zone_id = module.kong_public_dns_record.zone_id
     }
   }
 
