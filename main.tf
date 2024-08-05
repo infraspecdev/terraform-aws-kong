@@ -238,7 +238,7 @@ module "ecs_kong" {
     memory             = var.memory_for_kong_task
     task_role_arn      = aws_iam_role.ecs_exec.arn
     execution_role_arn = aws_iam_role.ecs_exec.arn
-    
+
     container_definitions = [
       {
         name         = local.kong.name
