@@ -184,6 +184,8 @@ data "aws_iam_policy_document" "assume_role_policy" {
 resource "aws_iam_role" "ecs_exec" {
   name_prefix        = local.ecs.iam.name_prefix
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
+
+  tags = local.default_tags
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_exec" {
@@ -380,6 +382,8 @@ module "internal_alb_kong" {
       ]
     }
   }
+
+  tags = local.default_tags
 }
 
 ################################################################################
