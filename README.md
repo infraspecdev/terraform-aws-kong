@@ -1,4 +1,8 @@
 <!-- BEGIN_TF_DOCS -->
+# terraform-aws-kong
+
+Terraform Module to setup Kong(OSS) in ECS with self managed EC2 instances.
+
 # Architectural Diagram
 
 ![Kong](https://github.com/infraspecdev/terraform-aws-kong/raw/main/diagrams/kong-architecture.png)
@@ -7,60 +11,18 @@
 
 This setup assumes that the `ECS cluster` that has `Auto Scaling Group (ASG)` exist with the name `default`. If you are using different name, you can provide those in the variables section of your Terraform configuration.
 
-# Prerequisites for Setting Up AWS SSM Parameters
-
-To configure and manage your AWS resources and GitHub Actions using Secure String parameters in AWS Systems Manager Parameter Store, follow the steps below to add the required parameters:
-
-## AWS CLI Installation
-
-Ensure you have the AWS CLI installed on your machine. You can install the AWS CLI using the following commands based on your operating system:
-
-### Windows
-```sh
-msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
-```
-
-### macOS
-```sh
-brew install awscli
-```
-
-### Linux
-```sh
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-```
-
-## AWS CLI Configuration
-
-Configure the AWS CLI with your AWS credentials and region. Run the following command and follow the prompts to enter your AWS Access Key, Secret Access Key, and default region:
-
-```sh
-aws configure
-```
-
 ## Adding Parameters to AWS Systems Manager Parameter Store
 
-Use the following commands to add the required parameters to AWS Systems Manager Parameter Store. These parameters are necessary for configuring your PostgreSQL database and GitHub Actions.
+Ensure you have the AWS CLI installed on your machine. You can find the installation instructions for different operating systems in the official AWS CLI documentation:
+[Install AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
-### RDS Parameters
+Use the following commands to add the required parameters to AWS Systems Manager Parameter Store. These parameters are necessary for configuring your PostgreSQL database.
 
 ```sh
 aws ssm put-parameter --name "/rds/POSTGRES_USERNAME" --value "value" --type "SecureString"
 aws ssm put-parameter --name "/rds/POSTGRES_PASSWORD" --value "value" --type "SecureString"
 aws ssm put-parameter --name "/rds/POSTGRES_DB_NAME" --value "value" --type "SecureString"
 ```
-
-## Verifying Parameter Storage
-
-After adding the parameters, you can verify their storage in AWS Systems Manager Parameter Store using the following command:
-
-```sh
-aws ssm get-parameters --names "/rds/POSTGRES_USERNAME" "/rds/POSTGRES_PASSWORD" "/rds/POSTGRES_DB_NAME" --with-decryption
-```
-
-This command will display the values of the stored parameters, ensuring they have been added correctly.
 
 ## Requirements
 
