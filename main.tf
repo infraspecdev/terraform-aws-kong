@@ -44,7 +44,7 @@ module "postgres_security_group" {
 
 module "kong_rds" {
   source  = "terraform-aws-modules/rds/aws"
-  version = "~> 6.7.0"
+  version = "~> 6.10.0"
 
   identifier           = local.rds.db_identifier
   engine               = local.rds.engine
