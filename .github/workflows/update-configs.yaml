@@ -9,14 +9,14 @@
 
         steps:
         - name: Checkout template repository
-          uses: actions/checkout@v3
+          uses: actions/checkout@v4
           with:
             repository: infraspecdev/terraform-module-template
             token: ${{ secrets.GITHUB_TOKEN }}
             path: template-repo
 
         - name: Checkout target repository
-          uses: actions/checkout@v3
+          uses: actions/checkout@v4
           with:
             repository: ${{ github.repository }}
             token: ${{ secrets.GITHUB_TOKEN }}
