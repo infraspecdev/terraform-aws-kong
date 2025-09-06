@@ -1,7 +1,10 @@
 name: Terraform Docs
 
 on:
-  workflow_call:
+  pull_request:
+  push:
+    branches:
+      - main
 
 env:
   TERRAFORM_DOCS_VERSION: v0.18.0
@@ -13,7 +16,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref }}
+          ref: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Render and Push terraform docs for main module
         uses: terraform-docs/gh-actions@main
