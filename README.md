@@ -42,14 +42,14 @@ aws ssm put-parameter --name "/rds/POSTGRES_DB_NAME" --value "value" --type "Sec
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_ecs_kong"></a> [ecs\_kong](#module\_ecs\_kong) | infraspecdev/ecs-deployment/aws | ~> 4.0.4 |
-| <a name="module_ecs_task_security_group"></a> [ecs\_task\_security\_group](#module\_ecs\_task\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.1.2 |
+| <a name="module_ecs_task_security_group"></a> [ecs\_task\_security\_group](#module\_ecs\_task\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.3.0 |
 | <a name="module_internal_alb_kong"></a> [internal\_alb\_kong](#module\_internal\_alb\_kong) | infraspecdev/ecs-deployment/aws//modules/alb | ~> 2.0.0 |
-| <a name="module_internal_alb_security_group"></a> [internal\_alb\_security\_group](#module\_internal\_alb\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.1.2 |
+| <a name="module_internal_alb_security_group"></a> [internal\_alb\_security\_group](#module\_internal\_alb\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.3.0 |
 | <a name="module_kong_internal_dns_record"></a> [kong\_internal\_dns\_record](#module\_kong\_internal\_dns\_record) | ./modules/route-53-record | n/a |
 | <a name="module_kong_public_dns_record"></a> [kong\_public\_dns\_record](#module\_kong\_public\_dns\_record) | ./modules/route-53-record | n/a |
 | <a name="module_kong_rds"></a> [kong\_rds](#module\_kong\_rds) | terraform-aws-modules/rds/aws | ~> 6.11.0 |
-| <a name="module_postgres_security_group"></a> [postgres\_security\_group](#module\_postgres\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.1.2 |
-| <a name="module_public_alb_security_group"></a> [public\_alb\_security\_group](#module\_public\_alb\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.1.2 |
+| <a name="module_postgres_security_group"></a> [postgres\_security\_group](#module\_postgres\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.3.0 |
+| <a name="module_public_alb_security_group"></a> [public\_alb\_security\_group](#module\_public\_alb\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.3.0 |
 
 ## Resources
 
