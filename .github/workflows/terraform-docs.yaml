@@ -6,15 +6,16 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  pull-requests: write
+
 env:
   TERRAFORM_DOCS_VERSION: v0.18.0
 
 jobs:
   generateDocs:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
