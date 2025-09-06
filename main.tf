@@ -1,4 +1,4 @@
-data "aws_vpc" "vpc" {
+data "aws_vpc" "this" {
   id = var.vpc_id
 }
 
@@ -25,7 +25,7 @@ module "postgres_security_group" {
       from_port   = 0
       to_port     = local.rds.port
       protocol    = "tcp"
-      cidr_blocks = data.aws_vpc.vpc.cidr_block
+      cidr_blocks = data.aws_vpc.this.cidr_block
     },
   ]
   egress_with_cidr_blocks = [{
@@ -94,7 +94,7 @@ module "internal_alb_security_group" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = data.aws_vpc.vpc.cidr_block
+    cidr_blocks = data.aws_vpc.this.cidr_block
   }]
   egress_with_cidr_blocks = [{
     from_port   = 0
@@ -152,7 +152,7 @@ module "ecs_task_security_group" {
       from_port   = 0
       to_port     = 0
       protocol    = "-1"
-      cidr_blocks = data.aws_vpc.vpc.cidr_block
+      cidr_blocks = data.aws_vpc.this.cidr_block
     },
   ]
   egress_with_cidr_blocks = [{
@@ -198,7 +198,7 @@ resource "aws_iam_role_policy_attachment" "ecs_exec" {
 # ECS Kong
 ################################################################################
 
-data "aws_ecs_cluster" "default" {
+data "aws_ecs_cluster" "this" {
   cluster_name = var.cluster_name
 }
 
@@ -207,7 +207,7 @@ module "ecs_kong" {
   version = "~> 4.3.4"
 
   vpc_id       = var.vpc_id
-  cluster_name = data.aws_ecs_cluster.default.cluster_name
+  cluster_name = data.aws_ecs_cluster.this.cluster_name
 
   service = {
     name                 = local.kong.service_name

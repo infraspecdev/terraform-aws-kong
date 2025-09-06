@@ -1,28 +1,41 @@
 variable "private_subnet_ids" {
-  description = "List of private subnet id"
+  description = "List of private subnet IDs for database and Kong ECS deployment"
   type        = list(string)
+  nullable    = false
 }
 
 variable "public_subnet_ids" {
-  description = "List of public subnet id"
+  description = "List of public subnet IDs for public-facing load balancers"
   type        = list(string)
+  nullable    = false
 }
 
 variable "vpc_id" {
-  description = "The ID of the VPC"
+  description = "The ID of the VPC where Kong infrastructure will be deployed"
   type        = string
+  nullable    = false
 }
 
 variable "rds_instance_class" {
-  description = "The instance class to use"
+  description = "The RDS instance class for Kong database (e.g., db.t3.micro, db.r5.large)"
   type        = string
   default     = "db.t3.micro"
+
+  validation {
+    condition     = can(regex("^db\\.", var.rds_instance_class))
+    error_message = "RDS instance class must start with 'db.' (e.g., db.t3.micro, db.r5.large)."
+  }
 }
 
 variable "db_allocated_storage" {
-  description = "The amount of allocated storage in GBs"
+  description = "Initial allocated storage for Kong RDS instance in GBs"
   type        = number
   default     = 20
+
+  validation {
+    condition     = var.db_allocated_storage >= 20
+    error_message = "Allocated storage must be at least 20 GBs for RDS instances."
+  }
 }
 
 variable "db_max_allocated_storage" {
@@ -50,7 +63,7 @@ variable "deletion_protection" {
 }
 
 variable "create_db_subnet_group" {
-  description = "Whether to create a DB subnet group"
+  description = "Whether to create a DB subnet group for Kong RDS instance"
   type        = bool
   default     = true
 }
@@ -92,7 +105,7 @@ variable "maintenance_window" {
 }
 
 variable "cluster_name" {
-  description = "Name of the cluster"
+  description = "Name of the ECS cluster where Kong will be deployed"
   type        = string
   default     = "default"
 }
