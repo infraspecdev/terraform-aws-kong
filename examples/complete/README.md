@@ -49,7 +49,7 @@ Place this `terraform.tfvars` file in the same directory as your Terraform confi
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.8.4 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.13.0 |
 
 ## Providers
 
