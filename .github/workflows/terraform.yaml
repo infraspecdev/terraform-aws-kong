@@ -14,6 +14,12 @@ on:
     branches:
       - main
       - master
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+
 jobs:
   prTitlecheck:
     name: PR title check
