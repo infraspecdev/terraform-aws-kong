@@ -19,14 +19,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Render and Push terraform docs for main module
         if: github.actor != 'dependabot[bot]'
-        uses: terraform-docs/gh-actions@main
+        uses: terraform-docs/gh-actions@v1.4.1
         with:
           working-dir: .
           git-push: "true"
@@ -47,7 +47,7 @@ jobs:
 
       - name: Render and Push terraform docs for sub modules
         if: env.modules_exists == 'true' && github.actor != 'dependabot[bot]'
-        uses: terraform-docs/gh-actions@main
+        uses: terraform-docs/gh-actions@v1.4.1
         with:
           working-dir: .
           git-push: "true"
@@ -70,7 +70,7 @@ jobs:
 
       - name: Render and Push terraform docs for examples
         if: env.examples_exists == 'true' && github.actor != 'dependabot[bot]'
-        uses: terraform-docs/gh-actions@main
+        uses: terraform-docs/gh-actions@v1.4.1
         with:
           working-dir: .
           git-push: "true"
