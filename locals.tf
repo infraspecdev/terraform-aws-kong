@@ -14,16 +14,15 @@ locals {
     engine               = "postgres"
     storage_encrypted    = true
     storage_type         = "gp3"
-    engine_version       = var.postgres_engine_version
-    engine_family        = "postgres${var.postgres_major_engine_version}"
-    major_engine_version = var.postgres_major_engine_version
-
-    port              = 5432
-    sg_name           = "kong-postgres"
-    sg_description    = "Allow all traffic within vpc"
-    postgres_username = data.aws_ssm_parameter.rds["POSTGRES_USERNAME"].value
-    postgres_password = data.aws_ssm_parameter.rds["POSTGRES_PASSWORD"].value
-    postgres_db_name  = data.aws_ssm_parameter.rds["POSTGRES_DB_NAME"].value
+    engine_version       = 16.3
+    engine_family        = "postgres16"
+    major_engine_version = 16
+    port                 = 5432
+    sg_name              = "kong-postgres"
+    sg_description       = "Allow all traffic within vpc"
+    postgres_username    = data.aws_ssm_parameter.rds["POSTGRES_USERNAME"].value
+    postgres_password    = data.aws_ssm_parameter.rds["POSTGRES_PASSWORD"].value
+    postgres_db_name     = data.aws_ssm_parameter.rds["POSTGRES_DB_NAME"].value
   }
 
   ecs = {

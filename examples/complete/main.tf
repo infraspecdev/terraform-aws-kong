@@ -28,6 +28,4 @@ module "kong" {
   memory_for_kong_task           = var.memory_for_kong_task
   desired_count_for_kong_service = var.desired_count_for_kong_service
   force_new_deployment           = var.force_new_deployment
-  postgres_engine_version        = var.postgres_engine_version
-  postgres_major_engine_version  = var.postgres_major_engine_version
 }

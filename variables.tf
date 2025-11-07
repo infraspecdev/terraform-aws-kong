@@ -161,23 +161,3 @@ variable "force_new_deployment" {
   type        = bool
   default     = true
 }
-
-variable "postgres_engine_version" {
-  description = "PostgreSQL engine version for the RDS instance (e.g., 15.4, 16.3). Defaults to latest supported."
-  type        = number
-  default     = 16.3
-  validation {
-    condition     = var.postgres_engine_version >= 16
-    error_message = "The PostgreSQL engine version must be 16 or higher."
-  }
-}
-
-variable "postgres_major_engine_version" {
-  description = "Major PostgreSQL engine version (e.g., 15, 16). Used for parameter group family naming."
-  type        = number
-  default     = 16
-  validation {
-    condition     = var.postgres_major_engine_version >= 16
-    error_message = "The major PostgreSQL engine version must be 16 or higher."
-  }
-}

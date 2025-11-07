@@ -122,13 +122,3 @@ variable "force_new_deployment" {
   description = "Whether to force new deployment"
   type        = bool
 }
-
-variable "postgres_engine_version" {
-  description = "The version of the Postgres engine"
-  type        = number
-}
-
-variable "postgres_major_engine_version" {
-  description = "The major version of the Postgres engine"
-  type        = number
-}
