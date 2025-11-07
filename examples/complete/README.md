@@ -41,6 +41,8 @@ cpu_for_kong_task              = 512
 memory_for_kong_task           = 1024
 desired_count_for_kong_service = 2
 force_new_deployment           = true
+postgres_engine_version        = 16.3
+postgres_major_engine_version  = 16
 ```
 
 Place this `terraform.tfvars` file in the same directory as your Terraform configuration to automatically load these values. Adjust the values as needed to fit your specific environment and requirements.
