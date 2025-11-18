@@ -19,7 +19,7 @@ jobs:
         run: git pull origin main
 
       - name: Release
-        uses: cycjimmy/semantic-release-action@v5
+        uses: cycjimmy/semantic-release-action@v6
         with:
           semantic_version: 18.0.0
           extra_plugins: |
