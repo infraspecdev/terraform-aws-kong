@@ -316,7 +316,7 @@ module "ecs_kong" {
   create_acm = true
 
   providers = {
-    aws                        = aws,
+    aws                        = aws
     aws.cross_account_provider = aws.cross_account_provider
   }
   acm_certificates = {
