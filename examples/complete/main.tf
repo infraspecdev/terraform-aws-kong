@@ -1,5 +1,23 @@
+provider "aws" {
+  region = var.region
+}
+
+provider "aws" {
+  alias  = "cross_account_provider"
+  region = var.region
+  assume_role {
+    role_arn = var.route53_assume_role_arn
+  }
+}
+
+
 module "kong" {
   source = "../../"
+
+  providers = {
+    aws                        = aws
+    aws.cross_account_provider = aws.cross_account_provider
+  }
 
   vpc_id                  = var.vpc_id
   public_subnet_ids       = var.public_subnet_ids
@@ -30,4 +48,5 @@ module "kong" {
   force_new_deployment           = var.force_new_deployment
   postgres_engine_version        = var.postgres_engine_version
   postgres_major_engine_version  = var.postgres_major_engine_version
+  route53_assume_role_arn        = var.route53_assume_role_arn
 }

@@ -204,7 +204,7 @@ data "aws_ecs_cluster" "this" {
 
 module "ecs_kong" {
   source  = "infraspecdev/ecs-deployment/aws"
-  version = "~> 4.3.4"
+  version = "4.3.6"
 
   vpc_id       = var.vpc_id
   cluster_name = data.aws_ecs_cluster.this.cluster_name
@@ -314,6 +314,11 @@ module "ecs_kong" {
   }
 
   create_acm = true
+
+  providers = {
+    aws                        = aws
+    aws.cross_account_provider = aws.cross_account_provider
+  }
   acm_certificates = {
     (local.kong.public_acm_certificate) = {
       domain_name = var.kong_public_domain_name
@@ -321,9 +326,16 @@ module "ecs_kong" {
         domain_name       = var.kong_public_domain_name
         validation_domain = var.kong_public_domain_name
       }
-      record_zone_id = module.kong_public_dns_record.zone_id
+
+      record_zone_id = (
+        var.route53_assume_role_arn != null
+        ? module.kong_public_dns_record[0].zone_id
+        : module.kong_public_dns_record_same_account[0].zone_id
+      )
     }
   }
+
+  route53_assume_role_arn = var.route53_assume_role_arn
 
   depends_on = [module.kong_rds]
 }
@@ -389,23 +401,57 @@ module "internal_alb_kong" {
 ################################################################################
 # Route53 Record For Public ALB
 ################################################################################
-
-module "kong_public_dns_record" {
+module "kong_public_dns_record_same_account" {
+  count  = var.route53_assume_role_arn == null ? 1 : 0
   source = "./modules/route-53-record"
 
   domain       = var.kong_public_domain_name
   alb_dns_name = module.ecs_kong.alb_dns_name
   alb_zone_id  = module.ecs_kong.alb_zone_id
+
+  providers = {
+    aws = aws
+  }
 }
 
 ################################################################################
 # Route53 Record For Internal ALB
 ################################################################################
-
-module "kong_internal_dns_record" {
+module "kong_internal_dns_record_same_account" {
+  count  = var.route53_assume_role_arn == null ? 1 : 0
   source = "./modules/route-53-record"
 
   domain       = var.kong_admin_domain_name
   alb_dns_name = module.internal_alb_kong.dns_name
   alb_zone_id  = module.ecs_kong.alb_zone_id
+
+  providers = {
+    aws = aws
+  }
+}
+
+module "kong_public_dns_record" {
+  count  = var.route53_assume_role_arn != null ? 1 : 0
+  source = "./modules/route-53-record"
+
+  domain       = var.kong_public_domain_name
+  alb_dns_name = module.ecs_kong.alb_dns_name
+  alb_zone_id  = module.ecs_kong.alb_zone_id
+
+  providers = {
+    aws = aws.cross_account_provider
+  }
+}
+
+module "kong_internal_dns_record" {
+  count  = var.route53_assume_role_arn != null ? 1 : 0
+  source = "./modules/route-53-record"
+
+  domain       = var.kong_admin_domain_name
+  alb_dns_name = module.internal_alb_kong.dns_name
+  alb_zone_id  = module.ecs_kong.alb_zone_id
+
+  providers = {
+    aws = aws.cross_account_provider
+  }
 }

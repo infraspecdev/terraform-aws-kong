@@ -1,4 +1,28 @@
 <!-- BEGIN_TF_DOCS -->
+# Complete Example
+
+This example demonstrates a **production-ready Kong deployment** with all configurable options, including RDS settings, ECS task configuration, monitoring, and cross-account Route53 support.
+
+## Use Case
+
+Use this example when you need:
+- Full control over RDS database configuration (instance class, storage, backup retention, multi-AZ, etc.)
+- Custom ECS task settings (CPU, memory, logging)
+- Performance insights and monitoring
+- Production-grade setup with deletion protection and backups
+- Flexible Route53 DNS configuration (same-account or cross-account)
+
+## Key Features
+
+- Comprehensive RDS PostgreSQL configuration with performance insights
+- Multi-AZ deployment support for high availability
+- Customizable ECS task resources and logging
+- SSL/TLS configuration with custom SSL policies
+- Cross-account Route53 support via assume role
+- Production backup and maintenance windows
+
+## Usage
+
 ### Example Variable Values
 
 Here is an example of how to define the variable values in your `terraform.tfvars` file:

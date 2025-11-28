@@ -9,7 +9,7 @@ Terraform Module to setup Kong(OSS) in ECS with self managed EC2 instances.
 
 # Assumptions
 
-This setup assumes that the `ECS cluster` that has `Auto Scaling Group (ASG)` exist with the name `default`. If you are using different name, you can provide those in the variables section of your Terraform configuration.
+This setup assumes that the `ECS cluster` that has `Auto Scaling Group (ASG)` exist with the name `default`. If you are using different name, you can provide those in the variables section of your Terraform configuration.This module also have a provision that your hosted zone can be in same amazon account where your resources are going to create or in a different amazon account. So, if you are having hosted zone in a different account you need to pass IAM role ARN for cross-account Route53 access.
 
 ## Adding Parameters to AWS Systems Manager Parameter Store
 
