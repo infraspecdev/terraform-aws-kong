@@ -20,6 +20,9 @@ repos:
           - '--args=--only=terraform_workspace_remote'
           - '--args=--only=terraform_unused_required_providers'
       - id: terraform_validate
+        args:
+          - --hook-config=--retry-once-with-cleanup=true
+        files: ^examples/
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
