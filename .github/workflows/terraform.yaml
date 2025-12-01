@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request_target:
-    types:
-      - opened
-      - edited
-      - synchronize
   pull_request:
     branches:
       - main
@@ -21,7 +16,7 @@ permissions:
 jobs:
   prTitlecheck:
     name: PR title check
-    if: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'main' }}
+    if: ${{ github.event.pull_request.base.ref == 'main' }}
     uses: ./.github/workflows/pr-title.yaml
 
   preCommitCheck:
