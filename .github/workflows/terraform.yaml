@@ -4,14 +4,15 @@ on:
   push:
     branches:
       - main
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
   pull_request:
     branches:
       - main
 
-permissions:
-  contents: write
-  pull-requests: write
-  actions: read
 
 jobs:
   prTitlecheck:
