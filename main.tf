@@ -15,10 +15,6 @@ data "aws_ssm_parameter" "rds" {
 module "postgres_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.3.0"
-  providers = {
-    aws = aws
-  }
-
 
   name        = local.rds.sg_name
   description = local.rds.sg_description
@@ -49,9 +45,6 @@ module "postgres_security_group" {
 module "kong_rds" {
   source  = "terraform-aws-modules/rds/aws"
   version = "~> 6.13.0"
-  providers = {
-    aws = aws
-  }
 
   identifier           = local.rds.db_identifier
   engine               = local.rds.engine
@@ -93,9 +86,6 @@ module "kong_rds" {
 module "internal_alb_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.3.0"
-  providers = {
-    aws = aws
-  }
 
   name   = local.kong.alb_sg_name
   vpc_id = var.vpc_id
@@ -123,9 +113,6 @@ module "internal_alb_security_group" {
 module "public_alb_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.3.0"
-  providers = {
-    aws = aws
-  }
 
   name   = local.kong.alb_sg_name
   vpc_id = var.vpc_id
@@ -156,9 +143,6 @@ module "public_alb_security_group" {
 module "ecs_task_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.3.0"
-  providers = {
-    aws = aws
-  }
 
   name   = local.kong.ecs_task_sg_name
   vpc_id = var.vpc_id
