@@ -12,8 +12,6 @@ on:
   pull_request:
     branches:
       - main
-
-
 jobs:
   prTitlecheck:
     name: PR title check
