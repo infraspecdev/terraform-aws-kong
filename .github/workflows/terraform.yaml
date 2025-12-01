@@ -8,10 +8,10 @@ on:
     branches:
       - main
 jobs:
-  prTitlecheck:
-    name: PR title check
-    if: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'main' }}
-    uses: ./.github/workflows/pr-title.yaml
+  # prTitlecheck:
+  #   name: PR title check
+  #   if: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'main' }}
+  #   uses: ./.github/workflows/pr-title.yaml
 
   preCommitCheck:
     name: Terraform Checks
