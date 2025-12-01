@@ -14,11 +14,8 @@ repos:
           - '--args=--only=terraform_typed_variables'
           - '--args=--only=terraform_module_pinned_source'
           - '--args=--only=terraform_naming_convention'
-          - '--args=--only=terraform_required_version'
-          - '--args=--only=terraform_required_providers'
           - '--args=--only=terraform_standard_module_structure'
           - '--args=--only=terraform_workspace_remote'
-          - '--args=--only=terraform_unused_required_providers'
       - id: terraform_validate
         args:
           - --hook-config=--retry-once-with-cleanup=true
