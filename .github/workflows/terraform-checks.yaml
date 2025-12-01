@@ -15,7 +15,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: "1.14.0"
+          terraform_version: "1.13.0"
 
       - name: Initialize Terraform
         id: init
@@ -24,6 +24,27 @@ jobs:
       - name: Terraform Test
         id: fmt
         run: terraform test
+
+  validateExamples:
+    name: Terraform Validate Examples
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.6.0"
+
+      - name: Validate all example folders
+        run: |
+          for dir in examples/*/; do
+            echo "Validating $dir"
+            terraform -chdir="$dir" init -input=false > /dev/null
+            terraform -chdir="$dir" validate
+          done
 
   collectInputs:
     name: Collect workflow inputs
@@ -63,6 +84,23 @@ jobs:
         uses: clowdhaus/terraform-min-max@v2.1.0
         with:
           directory: ${{ matrix.directory }}
+
+            - name: Inject CI provider configs
+        run: |
+          echo "Injecting provider configs for CI..."
+          for dir in examples/*/; do
+            cat <<EOF > $dir/ci-providers.tf
+            provider "aws" {
+              region = "ap-south-1"
+            }
+
+            provider "aws" {
+              alias  = "cross_account_provider"
+              region = "ap-south-1"
+            }
+            EOF
+                      done
+
 
       - name: Pre-commit Terraform ${{ steps.minMax.outputs.minVersion }}
         # Run only validate pre-commit check on min version supported
@@ -104,6 +142,23 @@ jobs:
       - name: Terraform min/max versions
         id: minMax
         uses: clowdhaus/terraform-min-max@v2.1.0
+
+              - name: Inject CI provider configs
+        run: |
+          echo "Injecting provider configs for CI..."
+          for dir in examples/*/; do
+            cat <<EOF > $dir/ci-providers.tf
+              provider "aws" {
+                region = "ap-south-1"
+              }
+
+              provider "aws" {
+                alias  = "cross_account_provider"
+                region = "ap-south-1"
+              }
+              EOF
+                        done
+
 
       - name: Pre-commit Terraform ${{ steps.minMax.outputs.maxVersion }}
         uses: clowdhaus/terraform-composite-actions/pre-commit@v1.14.0

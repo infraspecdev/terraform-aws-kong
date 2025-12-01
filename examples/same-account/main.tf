@@ -2,7 +2,6 @@ provider "aws" {
   region = var.region
 }
 
-
 module "kong" {
   source = "../../"
 

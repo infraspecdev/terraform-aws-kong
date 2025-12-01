@@ -15,6 +15,10 @@ data "aws_ssm_parameter" "rds" {
 module "postgres_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.3.0"
+  providers = {
+    aws = aws
+  }
+
 
   name        = local.rds.sg_name
   description = local.rds.sg_description
@@ -45,6 +49,9 @@ module "postgres_security_group" {
 module "kong_rds" {
   source  = "terraform-aws-modules/rds/aws"
   version = "~> 6.13.0"
+  providers = {
+    aws = aws
+  }
 
   identifier           = local.rds.db_identifier
   engine               = local.rds.engine
@@ -86,6 +93,9 @@ module "kong_rds" {
 module "internal_alb_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.3.0"
+  providers = {
+    aws = aws
+  }
 
   name   = local.kong.alb_sg_name
   vpc_id = var.vpc_id
@@ -113,6 +123,9 @@ module "internal_alb_security_group" {
 module "public_alb_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.3.0"
+  providers = {
+    aws = aws
+  }
 
   name   = local.kong.alb_sg_name
   vpc_id = var.vpc_id
@@ -143,6 +156,9 @@ module "public_alb_security_group" {
 module "ecs_task_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 5.3.0"
+  providers = {
+    aws = aws
+  }
 
   name   = local.kong.ecs_task_sg_name
   vpc_id = var.vpc_id
@@ -205,6 +221,11 @@ data "aws_ecs_cluster" "this" {
 module "ecs_kong" {
   source  = "infraspecdev/ecs-deployment/aws"
   version = "4.3.6"
+
+  providers = {
+    aws                        = aws
+    aws.cross_account_provider = aws.cross_account_provider
+  }
 
   vpc_id       = var.vpc_id
   cluster_name = data.aws_ecs_cluster.this.cluster_name
@@ -314,11 +335,6 @@ module "ecs_kong" {
   }
 
   create_acm = true
-
-  providers = {
-    aws                        = aws
-    aws.cross_account_provider = aws.cross_account_provider
-  }
   acm_certificates = {
     (local.kong.public_acm_certificate) = {
       domain_name = var.kong_public_domain_name
