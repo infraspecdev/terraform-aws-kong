@@ -204,7 +204,7 @@ data "aws_ecs_cluster" "this" {
 
 module "ecs_kong" {
   source  = "infraspecdev/ecs-deployment/aws"
-  version = "4.3.4"
+  version = "~> 4.3.4"
 
   vpc_id       = var.vpc_id
   cluster_name = data.aws_ecs_cluster.this.cluster_name
@@ -334,7 +334,7 @@ module "ecs_kong" {
 
 module "internal_alb_kong" {
   source  = "infraspecdev/ecs-deployment/aws//modules/alb"
-  version = "4.3.4"
+  version = "~> 4.3.4"
 
   name                       = "${local.kong.name}-internal"
   internal                   = true
