@@ -24,6 +24,13 @@ jobs:
     if: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'main' }}
     uses: ./.github/workflows/pr-title.yaml
 
+  releasePreview:
+    name: Release Preview
+    uses: ./.github/workflows/release-preview.yaml
+    permissions:
+      contents: write
+      pull-requests: write
+
   preCommitCheck:
     name: Terraform Checks
     uses: ./.github/workflows/terraform-checks.yaml
