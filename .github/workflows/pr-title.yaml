@@ -10,13 +10,11 @@ jobs:
     steps:
       - name: Debug - Show PR context
         run: |
-          echo "=== DEBUG: PR Title Check Input ==="
           echo "Event name: ${{ github.event_name }}"
           echo "PR Title: ${{ github.event.pull_request.title }}"
           echo "PR Number: ${{ github.event.pull_request.number }}"
           echo "Base Ref: ${{ github.event.pull_request.base.ref }}"
           echo "Head Ref: ${{ github.event.pull_request.head.ref }}"
-          echo "==================================="
 
       # Please look up the latest version from
       # https://github.com/amannn/action-semantic-pull-request/releases
