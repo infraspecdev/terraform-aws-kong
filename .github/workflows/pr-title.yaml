@@ -8,12 +8,25 @@ jobs:
     name: Validate PR title
     runs-on: ubuntu-latest
     steps:
+      - name: Debug - Show PR context
+        run: |
+          echo "=== DEBUG: PR Title Check Input ==="
+          echo "Event name: ${{ github.event_name }}"
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "PR Number: ${{ github.event.pull_request.number }}"
+          echo "Base Ref: ${{ github.event.pull_request.base.ref }}"
+          echo "Head Ref: ${{ github.event.pull_request.head.ref }}"
+          echo "==================================="
+
       # Please look up the latest version from
       # https://github.com/amannn/action-semantic-pull-request/releases
       - uses: amannn/action-semantic-pull-request@v6.1.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          # Enable debug output
+          ignoreLabels: |
+            ignore-semantic-pull-request
           # Configure which types are allowed.
           # Default: https://github.com/commitizen/conventional-commit-types
           types: |
