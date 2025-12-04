@@ -20,8 +20,9 @@ permissions:
   statuses: write
 
 jobs:
-  name: PR title check
-  uses: ./.github/workflows/pr-title.yaml
+  prTitlecheck:
+    name: PR title check
+    uses: ./.github/workflows/pr-title.yaml
 
   releasePreview:
     name: Release Preview
