@@ -24,6 +24,9 @@ jobs:
     name: PR title check
     if: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'main' }}
     uses: ./.github/workflows/pr-title.yaml
+    permissions:
+      pull-requests: read
+      statuses: write
 
   releasePreview:
     name: Release Preview
