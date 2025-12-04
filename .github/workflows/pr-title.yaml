@@ -18,7 +18,9 @@ jobs:
 
       # Please look up the latest version from
       # https://github.com/amannn/action-semantic-pull-request/releases
-      - uses: amannn/action-semantic-pull-request@v6.1.1
+      - name: Validate PR title
+        id: validate_pr_title
+        uses: amannn/action-semantic-pull-request@v6.1.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -57,3 +59,36 @@ jobs:
           # merge commit, and it's easy to commit this by mistake. Enable this option
           # to also validate the commit message for one commit PRs.
           validateSingleCommit: false
+
+      - name: Validation Result - Success
+        if: success()
+        run: |
+          echo "==================================="
+          echo " PR TITLE VALIDATION PASSED"
+          echo "==================================="
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "Status: VALID ✓"
+          echo ""
+          echo "Your PR title follows conventional commit format!"
+          echo "The PR is ready for review and merge."
+
+      - name: Validation Result - Failure
+        if: failure()
+        run: |
+          echo "==================================="
+          echo " PR TITLE VALIDATION FAILED"
+          echo "==================================="
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "Status: INVALID ✗"
+          echo ""
+          echo "Please update your PR title to follow conventional commit format:"
+          echo "  <type>[optional scope][optional !]: <description>"
+          echo ""
+          echo "Allowed types: fix, feat, docs, ci, chore"
+          echo "Description must start with an uppercase letter"
+          echo ""
+          echo "Examples:"
+          echo "  ✓ feat: Add new feature"
+          echo "  ✓ fix: Resolve bug in validation"
+          echo "  ✓ feat!: Breaking change description"
+          echo "  ✓ feat(api): Add new endpoint"
