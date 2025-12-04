@@ -20,13 +20,8 @@ permissions:
   statuses: write
 
 jobs:
-  prTitlecheck:
-    name: PR title check
-    if: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'main' }}
-    uses: ./.github/workflows/pr-title.yaml
-    permissions:
-      pull-requests: read
-      statuses: write
+  name: PR title check
+  uses: ./.github/workflows/pr-title.yaml
 
   releasePreview:
     name: Release Preview
