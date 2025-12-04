@@ -29,24 +29,26 @@ aws ssm put-parameter --name "/rds/POSTGRES_DB_NAME" --value "value" --type "Sec
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.13.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.5.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.5.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ecs_kong"></a> [ecs\_kong](#module\_ecs\_kong) | infraspecdev/ecs-deployment/aws | ~> 4.3.4 |
+| <a name="module_ecs_kong"></a> [ecs\_kong](#module\_ecs\_kong) | infraspecdev/ecs-deployment/aws | ~> 5.0.0 |
 | <a name="module_ecs_task_security_group"></a> [ecs\_task\_security\_group](#module\_ecs\_task\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.3.0 |
-| <a name="module_internal_alb_kong"></a> [internal\_alb\_kong](#module\_internal\_alb\_kong) | infraspecdev/ecs-deployment/aws//modules/alb | ~> 4.3.4 |
+| <a name="module_internal_alb_kong"></a> [internal\_alb\_kong](#module\_internal\_alb\_kong) | infraspecdev/ecs-deployment/aws//modules/alb | ~> 5.0.0 |
 | <a name="module_internal_alb_security_group"></a> [internal\_alb\_security\_group](#module\_internal\_alb\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.3.0 |
 | <a name="module_kong_internal_dns_record"></a> [kong\_internal\_dns\_record](#module\_kong\_internal\_dns\_record) | ./modules/route-53-record | n/a |
+| <a name="module_kong_internal_dns_record_same_account"></a> [kong\_internal\_dns\_record\_same\_account](#module\_kong\_internal\_dns\_record\_same\_account) | ./modules/route-53-record | n/a |
 | <a name="module_kong_public_dns_record"></a> [kong\_public\_dns\_record](#module\_kong\_public\_dns\_record) | ./modules/route-53-record | n/a |
+| <a name="module_kong_public_dns_record_same_account"></a> [kong\_public\_dns\_record\_same\_account](#module\_kong\_public\_dns\_record\_same\_account) | ./modules/route-53-record | n/a |
 | <a name="module_kong_rds"></a> [kong\_rds](#module\_kong\_rds) | terraform-aws-modules/rds/aws | ~> 6.13.0 |
 | <a name="module_postgres_security_group"></a> [postgres\_security\_group](#module\_postgres\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.3.0 |
 | <a name="module_public_alb_security_group"></a> [public\_alb\_security\_group](#module\_public\_alb\_security\_group) | terraform-aws-modules/security-group/aws | ~> 5.3.0 |
@@ -92,6 +94,7 @@ aws ssm put-parameter --name "/rds/POSTGRES_DB_NAME" --value "value" --type "Sec
 | <a name="input_public_subnet_ids"></a> [public\_subnet\_ids](#input\_public\_subnet\_ids) | List of public subnet IDs for public-facing load balancers | `list(string)` | n/a | yes |
 | <a name="input_rds_db_tags"></a> [rds\_db\_tags](#input\_rds\_db\_tags) | List of tags | `map(string)` | `{}` | no |
 | <a name="input_rds_instance_class"></a> [rds\_instance\_class](#input\_rds\_instance\_class) | The RDS instance class for Kong database (e.g., db.t3.micro, db.r5.large) | `string` | `"db.t3.micro"` | no |
+| <a name="input_route53_assume_role_arn"></a> [route53\_assume\_role\_arn](#input\_route53\_assume\_role\_arn) | ARN of the IAM role to assume in the hosted-zone account (should be null for same-account). | `string` | `null` | no |
 | <a name="input_ssl_policy"></a> [ssl\_policy](#input\_ssl\_policy) | Name of the SSL Policy for the listener. | `string` | `"ELBSecurityPolicy-2016-08"` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The ID of the VPC where Kong infrastructure will be deployed | `string` | n/a | yes |
 
