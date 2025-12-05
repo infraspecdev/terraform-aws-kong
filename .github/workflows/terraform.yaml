@@ -16,7 +16,8 @@ on:
   permissions:
     contents: read
     pull-requests: write
-    statuses: read
+    actions: read
+    statuses: write
 
 jobs:
   prTitlecheck:
