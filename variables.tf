@@ -181,3 +181,9 @@ variable "postgres_major_engine_version" {
     error_message = "The major PostgreSQL engine version must be 16 or higher."
   }
 }
+
+variable "route53_assume_role_arn" {
+  description = "ARN of the IAM role to assume in the hosted-zone account (should be null for same-account)."
+  type        = string
+  default     = null
+}

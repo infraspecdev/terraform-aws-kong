@@ -17,12 +17,20 @@ permissions:
   contents: write
   pull-requests: write
   actions: read
+  statuses: write
 
 jobs:
   prTitlecheck:
     name: PR title check
     if: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'main' }}
     uses: ./.github/workflows/pr-title.yaml
+
+  releasePreview:
+    name: Release Preview
+    uses: ./.github/workflows/release-preview.yaml
+    permissions:
+      contents: write
+      pull-requests: write
 
   preCommitCheck:
     name: Terraform Checks

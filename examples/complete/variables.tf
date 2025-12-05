@@ -132,3 +132,13 @@ variable "postgres_major_engine_version" {
   description = "The major version of the Postgres engine"
   type        = number
 }
+
+variable "route53_assume_role_arn" {
+  description = "IAM role ARN for cross-account Route53 access."
+  type        = string
+}
+
+variable "region" {
+  description = "The AWS region"
+  type        = string
+}
