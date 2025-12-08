@@ -41,6 +41,10 @@ cpu_for_kong_task              = 512
 memory_for_kong_task           = 1024
 desired_count_for_kong_service = 2
 force_new_deployment           = true
+postgres_engine_version        = 16.3
+postgres_major_engine_version  = 16
+route53_assume_role_arn        = arn:aws:iam::aws-account-id:role/role-name
+region                         = us-east-1
 ```
 
 Place this `terraform.tfvars` file in the same directory as your Terraform configuration to automatically load these values. Adjust the values as needed to fit your specific environment and requirements.
@@ -50,6 +54,7 @@ Place this `terraform.tfvars` file in the same directory as your Terraform confi
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.13.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.0 |
 
 ## Providers
 
@@ -94,6 +99,8 @@ No resources.
 | <a name="input_public_subnet_ids"></a> [public\_subnet\_ids](#input\_public\_subnet\_ids) | List of public subnet IDs | `list(string)` | n/a | yes |
 | <a name="input_rds_db_tags"></a> [rds\_db\_tags](#input\_rds\_db\_tags) | List of tags | `map(string)` | n/a | yes |
 | <a name="input_rds_instance_class"></a> [rds\_instance\_class](#input\_rds\_instance\_class) | The instance class to use | `string` | n/a | yes |
+| <a name="input_region"></a> [region](#input\_region) | The AWS region | `string` | n/a | yes |
+| <a name="input_route53_assume_role_arn"></a> [route53\_assume\_role\_arn](#input\_route53\_assume\_role\_arn) | IAM role ARN for cross-account Route53 access. | `string` | n/a | yes |
 | <a name="input_ssl_policy"></a> [ssl\_policy](#input\_ssl\_policy) | (Optional) Name of the SSL Policy for the listener. | `string` | n/a | yes |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The ID of the VPC | `string` | n/a | yes |
 
