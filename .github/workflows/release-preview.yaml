@@ -41,14 +41,13 @@ jobs:
           unset GITHUB_REF_NAME
           unset GITHUB_HEAD_REF
           unset GITHUB_BASE_REF
-          unset GITHUB_EVENT_NAME
 
           # Set them to what we want
           export GITHUB_REF="refs/heads/${{ github.event.pull_request.head.ref }}"
           export GITHUB_REF_NAME="${{ github.event.pull_request.head.ref }}"
-          export GITHUB_EVENT_NAME="push"
 
           # Run semantic-release with inline configuration using CLI options
+          # Add PR merge ref to allowed branches since GitHub Actions runs PRs on refs/pull/*/merge
           OUTPUT=$(npx --package semantic-release@${{ env.SEMANTIC_RELEASE_VERSION }} \
             --package @semantic-release/exec \
             --package conventional-changelog-conventionalcommits \
