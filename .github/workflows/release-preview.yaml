@@ -41,10 +41,12 @@ jobs:
           unset GITHUB_REF_NAME
           unset GITHUB_HEAD_REF
           unset GITHUB_BASE_REF
+          unset GITHUB_EVENT_NAME
 
           # Set them to what we want
           export GITHUB_REF="refs/heads/${{ github.event.pull_request.head.ref }}"
           export GITHUB_REF_NAME="${{ github.event.pull_request.head.ref }}"
+          export GITHUB_EVENT_NAME="push"
 
           # Run semantic-release with inline configuration using CLI options
           OUTPUT=$(npx --package semantic-release@${{ env.SEMANTIC_RELEASE_VERSION }} \
@@ -54,7 +56,8 @@ jobs:
             --dry-run \
             --no-ci \
             --debug \
-            --branches ${{ github.event.pull_request.head.ref }} 2>&1 || true)
+            --branches '${{ github.event.pull_request.head.ref }}' \
+            --branches 'refs/pull/${{ github.event.pull_request.number }}/merge' 2>&1 || true)
           echo "$OUTPUT"
 
           # Extract version information
