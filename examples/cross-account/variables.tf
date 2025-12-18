@@ -48,3 +48,9 @@ variable "region" {
   description = "The AWS region"
   type        = string
 }
+
+variable "s3_bucket_force_destroy" {
+  description = "Whether to force destroy the S3 bucket used for Kong logs"
+  type        = bool
+  default     = false
+}
