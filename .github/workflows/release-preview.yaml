@@ -47,6 +47,7 @@ jobs:
           export GITHUB_REF_NAME="${{ github.event.pull_request.head.ref }}"
 
           # Run semantic-release with inline configuration using CLI options
+          # Add PR merge ref to allowed branches since GitHub Actions runs PRs on refs/pull/*/merge
           OUTPUT=$(npx --package semantic-release@${{ env.SEMANTIC_RELEASE_VERSION }} \
             --package @semantic-release/exec \
             --package conventional-changelog-conventionalcommits \
@@ -54,7 +55,8 @@ jobs:
             --dry-run \
             --no-ci \
             --debug \
-            --branches ${{ github.event.pull_request.head.ref }} 2>&1 || true)
+            --branches '${{ github.event.pull_request.head.ref }}' \
+            --branches 'refs/pull/${{ github.event.pull_request.number }}/merge' 2>&1 || true)
           echo "$OUTPUT"
 
           # Extract version information

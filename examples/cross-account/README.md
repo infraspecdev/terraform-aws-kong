@@ -49,6 +49,7 @@ No resources.
 | <a name="input_public_subnet_ids"></a> [public\_subnet\_ids](#input\_public\_subnet\_ids) | List of public subnet IDs | `list(string)` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | The AWS region | `string` | n/a | yes |
 | <a name="input_route53_assume_role_arn"></a> [route53\_assume\_role\_arn](#input\_route53\_assume\_role\_arn) | The ARN of the DNS role | `string` | `null` | no |
+| <a name="input_s3_bucket_force_destroy"></a> [s3\_bucket\_force\_destroy](#input\_s3\_bucket\_force\_destroy) | Whether to force destroy the S3 bucket used for Kong logs | `bool` | `false` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The ID of the VPC | `string` | n/a | yes |
 
 ## Outputs

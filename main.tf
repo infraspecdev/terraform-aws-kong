@@ -336,6 +336,7 @@ module "ecs_kong" {
   }
 
   route53_assume_role_arn = var.route53_assume_role_arn
+  s3_bucket_force_destroy = var.s3_bucket_force_destroy
 
   depends_on = [module.kong_rds]
 }

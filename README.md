@@ -95,6 +95,7 @@ aws ssm put-parameter --name "/rds/POSTGRES_DB_NAME" --value "value" --type "Sec
 | <a name="input_rds_db_tags"></a> [rds\_db\_tags](#input\_rds\_db\_tags) | List of tags | `map(string)` | `{}` | no |
 | <a name="input_rds_instance_class"></a> [rds\_instance\_class](#input\_rds\_instance\_class) | The RDS instance class for Kong database (e.g., db.t3.micro, db.r5.large) | `string` | `"db.t3.micro"` | no |
 | <a name="input_route53_assume_role_arn"></a> [route53\_assume\_role\_arn](#input\_route53\_assume\_role\_arn) | ARN of the IAM role to assume in the hosted-zone account (should be null for same-account). | `string` | `null` | no |
+| <a name="input_s3_bucket_force_destroy"></a> [s3\_bucket\_force\_destroy](#input\_s3\_bucket\_force\_destroy) | Whether to force destroy the S3 bucket used for Kong logs | `bool` | `false` | no |
 | <a name="input_ssl_policy"></a> [ssl\_policy](#input\_ssl\_policy) | Name of the SSL Policy for the listener. | `string` | `"ELBSecurityPolicy-2016-08"` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The ID of the VPC where Kong infrastructure will be deployed | `string` | n/a | yes |
 

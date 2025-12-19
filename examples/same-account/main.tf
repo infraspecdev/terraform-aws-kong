@@ -20,4 +20,5 @@ module "kong" {
   postgres_engine_version       = var.postgres_engine_version
   postgres_major_engine_version = var.postgres_major_engine_version
   route53_assume_role_arn       = var.route53_assume_role_arn
+  s3_bucket_force_destroy       = var.s3_bucket_force_destroy
 }
